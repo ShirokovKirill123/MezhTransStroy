@@ -1,0 +1,670 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище СтроительствоModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Заявки">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Объекта" Type="int" />
+          <Property Name="id_Материала" Type="int" />
+          <Property Name="Количество" Type="int" />
+          <Property Name="Статус" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Материалы">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Название" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Единица_Измерения" Type="nvarchar" MaxLength="50" />
+          <Property Name="Стоимость" Type="decimal" Precision="15" Scale="2" />
+        </EntityType>
+        <EntityType Name="Отделы">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Название" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Пользователи">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Логин" Type="varchar" MaxLength="255" />
+          <Property Name="Пароль" Type="varchar" MaxLength="255" />
+          <Property Name="Уровень_Доступа" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Поставщики">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Название" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Контактное_Лицо" Type="nvarchar" MaxLength="255" />
+          <Property Name="Телефон" Type="nvarchar" MaxLength="100" />
+          <Property Name="Адрес" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Работа_На_Объекте">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Сотрудника" Type="int" />
+          <Property Name="id_Объекта" Type="int" />
+          <Property Name="Дата_Назначения" Type="date" />
+        </EntityType>
+        <EntityType Name="Распределение_Материалов_На_Объект">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Объекта" Type="int" />
+          <Property Name="id_Материала" Type="int" />
+          <Property Name="Количество" Type="int" />
+          <Property Name="Дата_Передачи" Type="date" />
+        </EntityType>
+        <EntityType Name="Склад">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_Материала" Type="int" />
+          <Property Name="Количество" Type="int" />
+          <Property Name="id_Поставщика" Type="int" />
+          <Property Name="Дата_Поступления" Type="date" />
+        </EntityType>
+        <EntityType Name="Сотрудники">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ФИО" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Должность" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Квалификация" Type="nvarchar" MaxLength="100" />
+          <Property Name="Дата_Приёма" Type="date" />
+          <Property Name="Контакты" Type="nvarchar" MaxLength="100" />
+          <Property Name="id_Отдела" Type="int" />
+        </EntityType>
+        <EntityType Name="Строительные_Объекты">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Название" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Адрес" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Дата_Начала" Type="date" />
+          <Property Name="Дата_Окончания" Type="date" />
+        </EntityType>
+        <Association Name="FK__Заявки__id_Матер__59FA5E80">
+          <End Role="Материалы" Type="Self.Материалы" Multiplicity="0..1" />
+          <End Role="Заявки" Type="Self.Заявки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Материалы">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Заявки">
+              <PropertyRef Name="id_Материала" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Заявки__id_Объек__59063A47">
+          <End Role="Строительные_Объекты" Type="Self.Строительные_Объекты" Multiplicity="0..1" />
+          <End Role="Заявки" Type="Self.Заявки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Строительные_Объекты">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Заявки">
+              <PropertyRef Name="id_Объекта" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Работа_На__id_Об__619B8048">
+          <End Role="Строительные_Объекты" Type="Self.Строительные_Объекты" Multiplicity="0..1" />
+          <End Role="Работа_На_Объекте" Type="Self.Работа_На_Объекте" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Строительные_Объекты">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Работа_На_Объекте">
+              <PropertyRef Name="id_Объекта" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Работа_На__id_Со__60A75C0F">
+          <End Role="Сотрудники" Type="Self.Сотрудники" Multiplicity="0..1" />
+          <End Role="Работа_На_Объекте" Type="Self.Работа_На_Объекте" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Сотрудники">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Работа_На_Объекте">
+              <PropertyRef Name="id_Сотрудника" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Распредел__id_Ма__5DCAEF64">
+          <End Role="Материалы" Type="Self.Материалы" Multiplicity="0..1" />
+          <End Role="Распределение_Материалов_На_Объект" Type="Self.Распределение_Материалов_На_Объект" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Материалы">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Распределение_Материалов_На_Объект">
+              <PropertyRef Name="id_Материала" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Распредел__id_Об__5CD6CB2B">
+          <End Role="Строительные_Объекты" Type="Self.Строительные_Объекты" Multiplicity="0..1" />
+          <End Role="Распределение_Материалов_На_Объект" Type="Self.Распределение_Материалов_На_Объект" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Строительные_Объекты">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Распределение_Материалов_На_Объект">
+              <PropertyRef Name="id_Объекта" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Склад__id_Матери__5441852A">
+          <End Role="Материалы" Type="Self.Материалы" Multiplicity="0..1" />
+          <End Role="Склад" Type="Self.Склад" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Материалы">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Склад">
+              <PropertyRef Name="id_Материала" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Склад__id_Постав__5535A963">
+          <End Role="Поставщики" Type="Self.Поставщики" Multiplicity="0..1" />
+          <End Role="Склад" Type="Self.Склад" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Поставщики">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Склад">
+              <PropertyRef Name="id_Поставщика" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Сотрудник__id_От__4BAC3F29">
+          <End Role="Отделы" Type="Self.Отделы" Multiplicity="0..1" />
+          <End Role="Сотрудники" Type="Self.Сотрудники" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Отделы">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Сотрудники">
+              <PropertyRef Name="id_Отдела" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище СтроительствоModelContainer">
+          <EntitySet Name="Заявки" EntityType="Self.Заявки" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Материалы" EntityType="Self.Материалы" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Отделы" EntityType="Self.Отделы" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Пользователи" EntityType="Self.Пользователи" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Поставщики" EntityType="Self.Поставщики" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Работа_На_Объекте" EntityType="Self.Работа_На_Объекте" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Распределение_Материалов_На_Объект" EntityType="Self.Распределение_Материалов_На_Объект" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Склад" EntityType="Self.Склад" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Сотрудники" EntityType="Self.Сотрудники" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Строительные_Объекты" EntityType="Self.Строительные_Объекты" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Заявки__id_Матер__59FA5E80" Association="Self.FK__Заявки__id_Матер__59FA5E80">
+            <End Role="Материалы" EntitySet="Материалы" />
+            <End Role="Заявки" EntitySet="Заявки" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Заявки__id_Объек__59063A47" Association="Self.FK__Заявки__id_Объек__59063A47">
+            <End Role="Строительные_Объекты" EntitySet="Строительные_Объекты" />
+            <End Role="Заявки" EntitySet="Заявки" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Работа_На__id_Об__619B8048" Association="Self.FK__Работа_На__id_Об__619B8048">
+            <End Role="Строительные_Объекты" EntitySet="Строительные_Объекты" />
+            <End Role="Работа_На_Объекте" EntitySet="Работа_На_Объекте" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Работа_На__id_Со__60A75C0F" Association="Self.FK__Работа_На__id_Со__60A75C0F">
+            <End Role="Сотрудники" EntitySet="Сотрудники" />
+            <End Role="Работа_На_Объекте" EntitySet="Работа_На_Объекте" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Распредел__id_Ма__5DCAEF64" Association="Self.FK__Распредел__id_Ма__5DCAEF64">
+            <End Role="Материалы" EntitySet="Материалы" />
+            <End Role="Распределение_Материалов_На_Объект" EntitySet="Распределение_Материалов_На_Объект" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Распредел__id_Об__5CD6CB2B" Association="Self.FK__Распредел__id_Об__5CD6CB2B">
+            <End Role="Строительные_Объекты" EntitySet="Строительные_Объекты" />
+            <End Role="Распределение_Материалов_На_Объект" EntitySet="Распределение_Материалов_На_Объект" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Склад__id_Матери__5441852A" Association="Self.FK__Склад__id_Матери__5441852A">
+            <End Role="Материалы" EntitySet="Материалы" />
+            <End Role="Склад" EntitySet="Склад" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Склад__id_Постав__5535A963" Association="Self.FK__Склад__id_Постав__5535A963">
+            <End Role="Поставщики" EntitySet="Поставщики" />
+            <End Role="Склад" EntitySet="Склад" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Сотрудник__id_От__4BAC3F29" Association="Self.FK__Сотрудник__id_От__4BAC3F29">
+            <End Role="Отделы" EntitySet="Отделы" />
+            <End Role="Сотрудники" EntitySet="Сотрудники" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="СтроительствоModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Заявки">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Объекта" Type="Int32" />
+          <Property Name="id_Материала" Type="Int32" />
+          <Property Name="Количество" Type="Int32" />
+          <Property Name="Статус" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Материалы" Relationship="Self.FK__Заявки__id_Матер__59FA5E80" FromRole="Заявки" ToRole="Материалы" />
+          <NavigationProperty Name="Строительные_Объекты" Relationship="Self.FK__Заявки__id_Объек__59063A47" FromRole="Заявки" ToRole="Строительные_Объекты" />
+        </EntityType>
+        <EntityType Name="Материалы">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Название" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Единица_Измерения" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Стоимость" Type="Decimal" Precision="15" Scale="2" />
+          <NavigationProperty Name="Заявки" Relationship="Self.FK__Заявки__id_Матер__59FA5E80" FromRole="Материалы" ToRole="Заявки" />
+          <NavigationProperty Name="Распределение_Материалов_На_Объект" Relationship="Self.FK__Распредел__id_Ма__5DCAEF64" FromRole="Материалы" ToRole="Распределение_Материалов_На_Объект" />
+          <NavigationProperty Name="Склад" Relationship="Self.FK__Склад__id_Матери__5441852A" FromRole="Материалы" ToRole="Склад" />
+        </EntityType>
+        <EntityType Name="Отделы">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Название" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Сотрудники" Relationship="Self.FK__Сотрудник__id_От__4BAC3F29" FromRole="Отделы" ToRole="Сотрудники" />
+        </EntityType>
+        <EntityType Name="Пользователи">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Логин" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Пароль" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Уровень_Доступа" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Поставщики">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Название" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Контактное_Лицо" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Телефон" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Адрес" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Склад" Relationship="Self.FK__Склад__id_Постав__5535A963" FromRole="Поставщики" ToRole="Склад" />
+        </EntityType>
+        <EntityType Name="Работа_На_Объекте">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Сотрудника" Type="Int32" />
+          <Property Name="id_Объекта" Type="Int32" />
+          <Property Name="Дата_Назначения" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Строительные_Объекты" Relationship="Self.FK__Работа_На__id_Об__619B8048" FromRole="Работа_На_Объекте" ToRole="Строительные_Объекты" />
+          <NavigationProperty Name="Сотрудники" Relationship="Self.FK__Работа_На__id_Со__60A75C0F" FromRole="Работа_На_Объекте" ToRole="Сотрудники" />
+        </EntityType>
+        <EntityType Name="Распределение_Материалов_На_Объект">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Объекта" Type="Int32" />
+          <Property Name="id_Материала" Type="Int32" />
+          <Property Name="Количество" Type="Int32" />
+          <Property Name="Дата_Передачи" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Материалы" Relationship="Self.FK__Распредел__id_Ма__5DCAEF64" FromRole="Распределение_Материалов_На_Объект" ToRole="Материалы" />
+          <NavigationProperty Name="Строительные_Объекты" Relationship="Self.FK__Распредел__id_Об__5CD6CB2B" FromRole="Распределение_Материалов_На_Объект" ToRole="Строительные_Объекты" />
+        </EntityType>
+        <EntityType Name="Склад">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_Материала" Type="Int32" />
+          <Property Name="Количество" Type="Int32" />
+          <Property Name="id_Поставщика" Type="Int32" />
+          <Property Name="Дата_Поступления" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Материалы" Relationship="Self.FK__Склад__id_Матери__5441852A" FromRole="Склад" ToRole="Материалы" />
+          <NavigationProperty Name="Поставщики" Relationship="Self.FK__Склад__id_Постав__5535A963" FromRole="Склад" ToRole="Поставщики" />
+        </EntityType>
+        <EntityType Name="Сотрудники">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ФИО" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Должность" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Квалификация" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Дата_Приёма" Type="DateTime" Precision="0" />
+          <Property Name="Контакты" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="id_Отдела" Type="Int32" />
+          <NavigationProperty Name="Отделы" Relationship="Self.FK__Сотрудник__id_От__4BAC3F29" FromRole="Сотрудники" ToRole="Отделы" />
+          <NavigationProperty Name="Работа_На_Объекте" Relationship="Self.FK__Работа_На__id_Со__60A75C0F" FromRole="Сотрудники" ToRole="Работа_На_Объекте" />
+        </EntityType>
+        <EntityType Name="Строительные_Объекты">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Название" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Адрес" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Дата_Начала" Type="DateTime" Precision="0" />
+          <Property Name="Дата_Окончания" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Заявки" Relationship="Self.FK__Заявки__id_Объек__59063A47" FromRole="Строительные_Объекты" ToRole="Заявки" />
+          <NavigationProperty Name="Работа_На_Объекте" Relationship="Self.FK__Работа_На__id_Об__619B8048" FromRole="Строительные_Объекты" ToRole="Работа_На_Объекте" />
+          <NavigationProperty Name="Распределение_Материалов_На_Объект" Relationship="Self.FK__Распредел__id_Об__5CD6CB2B" FromRole="Строительные_Объекты" ToRole="Распределение_Материалов_На_Объект" />
+        </EntityType>
+        <Association Name="FK__Заявки__id_Матер__59FA5E80">
+          <End Role="Материалы" Type="Self.Материалы" Multiplicity="0..1" />
+          <End Role="Заявки" Type="Self.Заявки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Материалы">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Заявки">
+              <PropertyRef Name="id_Материала" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Заявки__id_Объек__59063A47">
+          <End Role="Строительные_Объекты" Type="Self.Строительные_Объекты" Multiplicity="0..1" />
+          <End Role="Заявки" Type="Self.Заявки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Строительные_Объекты">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Заявки">
+              <PropertyRef Name="id_Объекта" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Распредел__id_Ма__5DCAEF64">
+          <End Role="Материалы" Type="Self.Материалы" Multiplicity="0..1" />
+          <End Role="Распределение_Материалов_На_Объект" Type="Self.Распределение_Материалов_На_Объект" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Материалы">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Распределение_Материалов_На_Объект">
+              <PropertyRef Name="id_Материала" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Склад__id_Матери__5441852A">
+          <End Role="Материалы" Type="Self.Материалы" Multiplicity="0..1" />
+          <End Role="Склад" Type="Self.Склад" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Материалы">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Склад">
+              <PropertyRef Name="id_Материала" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Сотрудник__id_От__4BAC3F29">
+          <End Role="Отделы" Type="Self.Отделы" Multiplicity="0..1" />
+          <End Role="Сотрудники" Type="Self.Сотрудники" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Отделы">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Сотрудники">
+              <PropertyRef Name="id_Отдела" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Склад__id_Постав__5535A963">
+          <End Role="Поставщики" Type="Self.Поставщики" Multiplicity="0..1" />
+          <End Role="Склад" Type="Self.Склад" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Поставщики">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Склад">
+              <PropertyRef Name="id_Поставщика" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Работа_На__id_Об__619B8048">
+          <End Role="Строительные_Объекты" Type="Self.Строительные_Объекты" Multiplicity="0..1" />
+          <End Role="Работа_На_Объекте" Type="Self.Работа_На_Объекте" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Строительные_Объекты">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Работа_На_Объекте">
+              <PropertyRef Name="id_Объекта" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Работа_На__id_Со__60A75C0F">
+          <End Role="Сотрудники" Type="Self.Сотрудники" Multiplicity="0..1" />
+          <End Role="Работа_На_Объекте" Type="Self.Работа_На_Объекте" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Сотрудники">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Работа_На_Объекте">
+              <PropertyRef Name="id_Сотрудника" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Распредел__id_Об__5CD6CB2B">
+          <End Role="Строительные_Объекты" Type="Self.Строительные_Объекты" Multiplicity="0..1" />
+          <End Role="Распределение_Материалов_На_Объект" Type="Self.Распределение_Материалов_На_Объект" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Строительные_Объекты">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Распределение_Материалов_На_Объект">
+              <PropertyRef Name="id_Объекта" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="СтроительствоEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Заявки" EntityType="Self.Заявки" />
+          <EntitySet Name="Материалы" EntityType="Self.Материалы" />
+          <EntitySet Name="Отделы" EntityType="Self.Отделы" />
+          <EntitySet Name="Пользователи" EntityType="Self.Пользователи" />
+          <EntitySet Name="Поставщики" EntityType="Self.Поставщики" />
+          <EntitySet Name="Работа_На_Объекте" EntityType="Self.Работа_На_Объекте" />
+          <EntitySet Name="Распределение_Материалов_На_Объект" EntityType="Self.Распределение_Материалов_На_Объект" />
+          <EntitySet Name="Склад" EntityType="Self.Склад" />
+          <EntitySet Name="Сотрудники" EntityType="Self.Сотрудники" />
+          <EntitySet Name="Строительные_Объекты" EntityType="Self.Строительные_Объекты" />
+          <AssociationSet Name="FK__Заявки__id_Матер__59FA5E80" Association="Self.FK__Заявки__id_Матер__59FA5E80">
+            <End Role="Материалы" EntitySet="Материалы" />
+            <End Role="Заявки" EntitySet="Заявки" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Заявки__id_Объек__59063A47" Association="Self.FK__Заявки__id_Объек__59063A47">
+            <End Role="Строительные_Объекты" EntitySet="Строительные_Объекты" />
+            <End Role="Заявки" EntitySet="Заявки" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Распредел__id_Ма__5DCAEF64" Association="Self.FK__Распредел__id_Ма__5DCAEF64">
+            <End Role="Материалы" EntitySet="Материалы" />
+            <End Role="Распределение_Материалов_На_Объект" EntitySet="Распределение_Материалов_На_Объект" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Склад__id_Матери__5441852A" Association="Self.FK__Склад__id_Матери__5441852A">
+            <End Role="Материалы" EntitySet="Материалы" />
+            <End Role="Склад" EntitySet="Склад" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Сотрудник__id_От__4BAC3F29" Association="Self.FK__Сотрудник__id_От__4BAC3F29">
+            <End Role="Отделы" EntitySet="Отделы" />
+            <End Role="Сотрудники" EntitySet="Сотрудники" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Склад__id_Постав__5535A963" Association="Self.FK__Склад__id_Постав__5535A963">
+            <End Role="Поставщики" EntitySet="Поставщики" />
+            <End Role="Склад" EntitySet="Склад" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Работа_На__id_Об__619B8048" Association="Self.FK__Работа_На__id_Об__619B8048">
+            <End Role="Строительные_Объекты" EntitySet="Строительные_Объекты" />
+            <End Role="Работа_На_Объекте" EntitySet="Работа_На_Объекте" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Работа_На__id_Со__60A75C0F" Association="Self.FK__Работа_На__id_Со__60A75C0F">
+            <End Role="Сотрудники" EntitySet="Сотрудники" />
+            <End Role="Работа_На_Объекте" EntitySet="Работа_На_Объекте" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Распредел__id_Об__5CD6CB2B" Association="Self.FK__Распредел__id_Об__5CD6CB2B">
+            <End Role="Строительные_Объекты" EntitySet="Строительные_Объекты" />
+            <End Role="Распределение_Материалов_На_Объект" EntitySet="Распределение_Материалов_На_Объект" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище СтроительствоModelContainer" CdmEntityContainer="СтроительствоEntities">
+          <EntitySetMapping Name="Заявки">
+            <EntityTypeMapping TypeName="СтроительствоModel.Заявки">
+              <MappingFragment StoreEntitySet="Заявки">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_Объекта" ColumnName="id_Объекта" />
+                <ScalarProperty Name="id_Материала" ColumnName="id_Материала" />
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+                <ScalarProperty Name="Статус" ColumnName="Статус" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Материалы">
+            <EntityTypeMapping TypeName="СтроительствоModel.Материалы">
+              <MappingFragment StoreEntitySet="Материалы">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Название" ColumnName="Название" />
+                <ScalarProperty Name="Единица_Измерения" ColumnName="Единица_Измерения" />
+                <ScalarProperty Name="Стоимость" ColumnName="Стоимость" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Отделы">
+            <EntityTypeMapping TypeName="СтроительствоModel.Отделы">
+              <MappingFragment StoreEntitySet="Отделы">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Название" ColumnName="Название" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Пользователи">
+            <EntityTypeMapping TypeName="СтроительствоModel.Пользователи">
+              <MappingFragment StoreEntitySet="Пользователи">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Логин" ColumnName="Логин" />
+                <ScalarProperty Name="Пароль" ColumnName="Пароль" />
+                <ScalarProperty Name="Уровень_Доступа" ColumnName="Уровень_Доступа" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Поставщики">
+            <EntityTypeMapping TypeName="СтроительствоModel.Поставщики">
+              <MappingFragment StoreEntitySet="Поставщики">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Название" ColumnName="Название" />
+                <ScalarProperty Name="Контактное_Лицо" ColumnName="Контактное_Лицо" />
+                <ScalarProperty Name="Телефон" ColumnName="Телефон" />
+                <ScalarProperty Name="Адрес" ColumnName="Адрес" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Работа_На_Объекте">
+            <EntityTypeMapping TypeName="СтроительствоModel.Работа_На_Объекте">
+              <MappingFragment StoreEntitySet="Работа_На_Объекте">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_Сотрудника" ColumnName="id_Сотрудника" />
+                <ScalarProperty Name="id_Объекта" ColumnName="id_Объекта" />
+                <ScalarProperty Name="Дата_Назначения" ColumnName="Дата_Назначения" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Распределение_Материалов_На_Объект">
+            <EntityTypeMapping TypeName="СтроительствоModel.Распределение_Материалов_На_Объект">
+              <MappingFragment StoreEntitySet="Распределение_Материалов_На_Объект">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_Объекта" ColumnName="id_Объекта" />
+                <ScalarProperty Name="id_Материала" ColumnName="id_Материала" />
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+                <ScalarProperty Name="Дата_Передачи" ColumnName="Дата_Передачи" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Склад">
+            <EntityTypeMapping TypeName="СтроительствоModel.Склад">
+              <MappingFragment StoreEntitySet="Склад">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_Материала" ColumnName="id_Материала" />
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+                <ScalarProperty Name="id_Поставщика" ColumnName="id_Поставщика" />
+                <ScalarProperty Name="Дата_Поступления" ColumnName="Дата_Поступления" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Сотрудники">
+            <EntityTypeMapping TypeName="СтроительствоModel.Сотрудники">
+              <MappingFragment StoreEntitySet="Сотрудники">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ФИО" ColumnName="ФИО" />
+                <ScalarProperty Name="Должность" ColumnName="Должность" />
+                <ScalarProperty Name="Квалификация" ColumnName="Квалификация" />
+                <ScalarProperty Name="Дата_Приёма" ColumnName="Дата_Приёма" />
+                <ScalarProperty Name="Контакты" ColumnName="Контакты" />
+                <ScalarProperty Name="id_Отдела" ColumnName="id_Отдела" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Строительные_Объекты">
+            <EntityTypeMapping TypeName="СтроительствоModel.Строительные_Объекты">
+              <MappingFragment StoreEntitySet="Строительные_Объекты">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Название" ColumnName="Название" />
+                <ScalarProperty Name="Адрес" ColumnName="Адрес" />
+                <ScalarProperty Name="Дата_Начала" ColumnName="Дата_Начала" />
+                <ScalarProperty Name="Дата_Окончания" ColumnName="Дата_Окончания" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
