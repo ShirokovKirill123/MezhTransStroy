@@ -12,15 +12,19 @@ namespace MezhTransStroy
     using System;
     using System.Collections.Generic;
     
-    public partial class Работа_На_Объекте
+    public partial class Оборудование
     {
-        public int id { get; set; }
-        public Nullable<int> id_Сотрудника { get; set; }
-        public Nullable<int> id_Объекта { get; set; }
-        public Nullable<System.DateTime> Дата_Назначения { get; set; }
-        public string Статус { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Оборудование()
+        {
+            this.Затраты_На_Оборудование = new HashSet<Затраты_На_Оборудование>();
+        }
     
-        public virtual Строительные_Объекты Строительные_Объекты { get; set; }
-        public virtual Сотрудники Сотрудники { get; set; }
+        public int id { get; set; }
+        public string Название { get; set; }
+        public string Тип { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Затраты_На_Оборудование> Затраты_На_Оборудование { get; set; }
     }
 }

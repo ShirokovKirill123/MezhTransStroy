@@ -17,6 +17,7 @@ namespace MezhTransStroy
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Строительные_Объекты()
         {
+            this.Затраты_На_Оборудование = new HashSet<Затраты_На_Оборудование>();
             this.Заявки = new HashSet<Заявки>();
             this.Работа_На_Объекте = new HashSet<Работа_На_Объекте>();
             this.Распределение_Материалов_На_Объект = new HashSet<Распределение_Материалов_На_Объект>();
@@ -27,7 +28,10 @@ namespace MezhTransStroy
         public string Адрес { get; set; }
         public Nullable<System.DateTime> Дата_Начала { get; set; }
         public Nullable<System.DateTime> Дата_Окончания { get; set; }
+        public Nullable<decimal> Выделенный_Бюджет { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Затраты_На_Оборудование> Затраты_На_Оборудование { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Заявки> Заявки { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

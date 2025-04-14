@@ -16,11 +16,17 @@ namespace MezhTransStroy
     {
         public int id { get; set; }
         public Nullable<int> id_Объекта { get; set; }
+        public Nullable<int> id_Склада { get; set; }
+        public Nullable<int> id_Поставщика { get; set; }
         public Nullable<int> id_Материала { get; set; }
-        public Nullable<int> Количество { get; set; }
+        public Nullable<int> Количество_Материала { get; set; }
+        public Nullable<decimal> Стоимость_Материалов { get; set; }
         public string Статус { get; set; }
+        public Nullable<System.DateTime> Дата_Заявки { get; set; }
     
         public virtual Материалы Материалы { get; set; }
         public virtual Строительные_Объекты Строительные_Объекты { get; set; }
+        public virtual Поставщики Поставщики { get; set; }
+        public virtual Склады Склады { get; set; }
     }
 }

@@ -17,7 +17,8 @@ namespace MezhTransStroy
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Поставщики()
         {
-            this.Склад = new HashSet<Склад>();
+            this.Заявки = new HashSet<Заявки>();
+            this.Материалы_На_Складах = new HashSet<Материалы_На_Складах>();
         }
     
         public int id { get; set; }
@@ -27,6 +28,8 @@ namespace MezhTransStroy
         public string Адрес { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Склад> Склад { get; set; }
+        public virtual ICollection<Заявки> Заявки { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Материалы_На_Складах> Материалы_На_Складах { get; set; }
     }
 }

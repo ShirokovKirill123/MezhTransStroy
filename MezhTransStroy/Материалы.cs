@@ -18,8 +18,8 @@ namespace MezhTransStroy
         public Материалы()
         {
             this.Заявки = new HashSet<Заявки>();
+            this.Материалы_На_Складах = new HashSet<Материалы_На_Складах>();
             this.Распределение_Материалов_На_Объект = new HashSet<Распределение_Материалов_На_Объект>();
-            this.Склад = new HashSet<Склад>();
         }
     
         public int id { get; set; }
@@ -30,8 +30,8 @@ namespace MezhTransStroy
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Заявки> Заявки { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Распределение_Материалов_На_Объект> Распределение_Материалов_На_Объект { get; set; }
+        public virtual ICollection<Материалы_На_Складах> Материалы_На_Складах { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Склад> Склад { get; set; }
+        public virtual ICollection<Распределение_Материалов_На_Объект> Распределение_Материалов_На_Объект { get; set; }
     }
 }

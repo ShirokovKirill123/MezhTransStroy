@@ -33,11 +33,15 @@
             <Border BorderThickness="1"
               BorderBrush="#FF000000"
               x:Name="SideMenu">
-                <StackPanel Width="219" Orientation="Vertical" HorizontalAlignment="Center" Height="250"  Background="Gray">
-                    <Button Content="Строительные объекты" Height="30" Margin="3,16" Click="Button_Construction_Objects_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
-                    <Button Content="Заявки" Height="30" Margin="3,16" Click="Button_Applications_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
-                    <Button Content="Распределение материалов на объект" Height="30" Margin="3,16" Click="Button_Allocation_of_Materials_to_the_Object_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
-                    <Button Content="Работа на объекте" Height="30" Margin="3,16" Click="Button_Work_On_Object_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
+                <StackPanel Width="219" Orientation="Vertical" HorizontalAlignment="Center" Height="300"  Background="Gray">
+                    <Button Content="Сотрудники" Height="30" Margin="3" Click="Button_Employees_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
+                    <Button Content="Строительные объекты" Height="30" Margin="3" Click="Button_Construction_Objects_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
+                    <Button Content="Материалы" Height="30" Margin="3" Click="Button_Materials_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
+                    <Button Content="Оборудование" Height="30" Margin="3" Click="Button_Equipment_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
+                    <Button Content="Поставщики" Height="30" Margin="3" Click="Button_Suppliers_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
+                    <Button Content="Распределение материалов на объект" Height="30" Margin="3" Click="Button_Allocation_of_Materials_to_the_Object_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
+                    <Button Content="Работа на объекте" Height="30" Margin="3" Click="Button_Work_On_Object_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
+                    <Button Content="Затраты на оборудование" Height="30" Margin="3" Click="Button_Equipment_Сosts_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
                 </StackPanel>
             </Border>
         </StackPanel>
@@ -78,12 +82,13 @@
             <TextBlock Text="Название" Margin="5" HorizontalAlignment="Center" FontFamily="Yu Gothic UI Semibold" />
             <TextBox x:Name="TextBoxName" Margin="5" Height="20" />
 
-            <Button Content="Добавить" Click="ButtonAdd_Click" Margin="5,15,5,5" Background="LightGreen" Height="30" FontFamily="Yu Gothic UI Semibold"/>
-            <Button Content="Сохранить" Click="ButtonEdit_Click" Margin="5,15,5,5" Background="Khaki" Height="30" FontFamily="Yu Gothic UI Semibold"/>
-            <Button Content="Удалить" Click="ButtonDelete_Click" Margin="5,15,5,5" Background="Tomato" Height="30" FontFamily="Yu Gothic UI Semibold"/>
-            <Button Content="Обновить" Click="ButtonUpdate_Click" Margin="5,15,5,5" Background="YellowGreen" Height="30" FontFamily="Yu Gothic UI Semibold"/>
-            <Button Content="Фильтрация" Click="ButtonFilter_Click" Margin="5,15,5,5" Background="BlanchedAlmond" Height="30" FontFamily="Yu Gothic UI Semibold"/>
-            <Button Content="Отчёты" Click="ButtonReport_Click" Margin="5,15,5,5" Background="#ADD8E6" Height="30" FontFamily="Yu Gothic UI Semibold"/>
+            <Button Content="Добавить" Click="ButtonAdd_Click" Margin="5,20,5,5" Background="LightGreen" Height="30" FontFamily="Yu Gothic UI Semibold"/>
+            <Button Content="Сохранить" Click="ButtonEdit_Click" Margin="5,10,5,5" Background="Khaki" Height="30" FontFamily="Yu Gothic UI Semibold"/>
+            <Button Content="Удалить" Click="ButtonDelete_Click" Margin="5,10,5,5" Background="Tomato" Height="30" FontFamily="Yu Gothic UI Semibold"/>
+            <Button Content="Обновить" Click="ButtonUpdate_Click" Margin="5,10,5,5" Background="YellowGreen" Height="30" FontFamily="Yu Gothic UI Semibold"/>
+            <Button Content="Фильтрация" Click="ButtonFilter_Click" Margin="5,10,5,5" Background="BlanchedAlmond" Height="30" FontFamily="Yu Gothic UI Semibold"/>
+            <Button Content="Отчёты" Click="ButtonReport_Click" Margin="5,10,5,5" Background="#ADD8E6" Height="30" FontFamily="Yu Gothic UI Semibold"/>
+            <Button Content="Движения материалов" Click="ButtonMaterialMovements_Click" Margin="5,10,5,5" Background="Thistle" Height="30" FontFamily="Yu Gothic UI Semibold"/>
         </StackPanel>
     </Grid>
 </Page>

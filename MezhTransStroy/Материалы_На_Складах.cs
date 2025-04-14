@@ -12,18 +12,18 @@ namespace MezhTransStroy
     using System;
     using System.Collections.Generic;
     
-    public partial class Распределение_Материалов_На_Объект
+    public partial class Материалы_На_Складах
     {
         public int id { get; set; }
         public Nullable<int> id_Склада { get; set; }
-        public Nullable<int> id_Объекта { get; set; }
         public Nullable<int> id_Материала { get; set; }
         public Nullable<int> Количество { get; set; }
         public Nullable<decimal> Стоимость_Материалов { get; set; }
-        public Nullable<System.DateTime> Дата_Передачи { get; set; }
+        public Nullable<int> id_Поставщика { get; set; }
+        public Nullable<System.DateTime> Дата_Поступления { get; set; }
     
         public virtual Материалы Материалы { get; set; }
-        public virtual Строительные_Объекты Строительные_Объекты { get; set; }
+        public virtual Поставщики Поставщики { get; set; }
         public virtual Склады Склады { get; set; }
     }
 }

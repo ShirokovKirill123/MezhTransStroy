@@ -4,26 +4,37 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1a9e130981624d12a834df728cfdbbde" Name="Diagram1">
-        <EntityTypeShape EntityType="СтроительствоModel.Заявки" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="СтроительствоModel.Материалы" Width="1.5" PointX="0.75" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="СтроительствоModel.Отделы" Width="1.5" PointX="1.5" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="СтроительствоModel.Пользователи" Width="1.5" PointX="5.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="СтроительствоModel.Поставщики" Width="1.5" PointX="0.75" PointY="16" IsExpanded="true" />
-        <EntityTypeShape EntityType="СтроительствоModel.Работа_На_Объекте" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="СтроительствоModel.Распределение_Материалов_На_Объект" Width="1.5" PointX="6" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="СтроительствоModel.Склад" Width="1.5" PointX="3" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="СтроительствоModel.Сотрудники" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="СтроительствоModel.Строительные_Объекты" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
-        <AssociationConnector Association="СтроительствоModel.FK__Заявки__id_Матер__59FA5E80" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Заявки__id_Объек__59063A47" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_Ма__5DCAEF64" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Склад__id_Матери__5441852A" ManuallyRouted="false" />
+      <Diagram DiagramId="cdccfcf09f494d73b550ccfd3fe93692" Name="Diagram1">
+        <EntityTypeShape EntityType="СтроительствоModel.Заработная_Плата_Сотрудников" Width="1.5" PointX="3" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="СтроительствоModel.Затраты_На_Оборудование" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="СтроительствоModel.Заявки" Width="1.5" PointX="6" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="СтроительствоModel.Материалы" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="СтроительствоModel.Материалы_На_Складах" Width="1.5" PointX="6" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="СтроительствоModel.Оборудование" Width="1.5" PointX="0.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="СтроительствоModel.Отделы" Width="1.5" PointX="1.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="СтроительствоModel.Пользователи" Width="1.5" PointX="5.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="СтроительствоModel.Поставщики" Width="1.5" PointX="3.75" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="СтроительствоModel.Работа_На_Объекте" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="СтроительствоModel.Распределение_Материалов_На_Объект" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="СтроительствоModel.Склады" Width="1.5" PointX="3.75" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="СтроительствоModel.Сотрудники" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="СтроительствоModel.Строительные_Объекты" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
+        <AssociationConnector Association="СтроительствоModel.FK__Заработна__id_Со__71D1E811" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Затраты_Н__id_Об__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Затраты_Н__id_Об__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Заявки__id_Матер__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Заявки__id_Объек__5FB337D6" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Заявки__id_Поста__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Заявки__id_Склад__60A75C0F" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Материалы__id_Ма__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_Ма__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Материалы__id_По__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Материалы__id_Ск__59063A47" ManuallyRouted="false" />
         <AssociationConnector Association="СтроительствоModel.FK__Сотрудник__id_От__4BAC3F29" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Склад__id_Постав__5535A963" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Работа_На__id_Об__619B8048" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Работа_На__id_Со__60A75C0F" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_Об__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Работа_На__id_Об__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Работа_На__id_Со__6A30C649" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_Об__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_Ск__66603565" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
