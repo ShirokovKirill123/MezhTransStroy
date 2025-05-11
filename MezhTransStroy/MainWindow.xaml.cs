@@ -29,7 +29,19 @@ namespace MezhTransStroy
         {
             InitializeComponent();
             Manager.MainFrame = MainFrame;
-        }       
+        }
+
+        private void MainFrame_ContentRendered(object sender, EventArgs e)
+        {
+            if (MainFrame.CanGoBack)
+            {
+                ButtonBack.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ButtonBack.Visibility = Visibility.Hidden;
+            }
+        }
 
         private void ButtonBack_Click(object sender, RoutedEventArgs e)
         {

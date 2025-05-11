@@ -32,13 +32,44 @@ namespace MezhTransStroy.Roles
     public partial class AdminPage : Page
     {
         private string currentTable;
-        
+        int notificationcount = 0;
+
         public AdminPage()
         {
             InitializeComponent();
-
+            NotificationManager.NotificationCountChanged += DisplayNotifications;
+            NotificationManager.LoadNotificationCount();
+            notificationcount = GetNotificationCount();
+            DisplayNotifications();
             this.DataContext = this;
-        }     
+        }
+
+        private void DisplayNotifications()
+        {
+            NotificationCountText.Text = NotificationManager.NotificationCount.ToString();
+
+            if (NotificationManager.NotificationCount > 0)
+            {
+                BtnNotifications.Visibility = Visibility.Visible;
+                NotificationBadge.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                NotificationCountText.Text = "0";
+            }
+        }
+
+        private int GetNotificationCount()
+        {
+            string уведомленияPath = "уведомления.json";
+            if (File.Exists(уведомленияPath))
+            {
+                string json = File.ReadAllText(уведомленияPath);
+                var уведомления = JsonConvert.DeserializeObject<List<string>>(json);
+                return уведомления?.Count ?? 0;
+            }
+            return 0;
+        }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
@@ -318,7 +349,7 @@ namespace MezhTransStroy.Roles
                 var поставщик = context.Поставщики.ToList();
                 var материал = context.Материалы.ToList();
                 var склады = context.Склады.ToList();
-                var статусы = new List<string> { "Ожидает обработки", "Обработано"};
+                var статусы = new List<string> { "Ожидает обработки", "Обработано", "Уже на объекте" };
 
                 var ApplicationsList = context.Заявки
                 .Include(emp => emp.Строительные_Объекты)
@@ -455,6 +486,7 @@ namespace MezhTransStroy.Roles
                     }
                 }
 
+                DisplayNotifications();
                 context.SaveChanges();
             }
 
@@ -463,6 +495,7 @@ namespace MezhTransStroy.Roles
                 старыеУведомления.AddRange(новыеУведомления);
                 string новыйJson = JsonConvert.SerializeObject(старыеУведомления, Formatting.Indented);
                 File.WriteAllText(уведомленияPath, новыйJson);
+                NotificationManager.LoadNotificationCount();
             }
 
             Button_Materials_In_Stock_Click(null, null);
@@ -473,7 +506,7 @@ namespace MezhTransStroy.Roles
       
         private void ButtonNotifications_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new NotificationPage());
+            Manager.MainFrame.Navigate(new NotificationPage()); 
         }        
 
         private void ButtonMaterialMovements_Click(object sender, RoutedEventArgs e)
@@ -1675,7 +1708,7 @@ namespace MezhTransStroy.Roles
         {
             var mainWindow = Window.GetWindow(this);
             var window = (MainWindow)mainWindow;
-            window.MainFrame.Navigate(new CostsPage());
+            window.MainFrame.Navigate(new ObjectInfoPage());
         }
     }
 }

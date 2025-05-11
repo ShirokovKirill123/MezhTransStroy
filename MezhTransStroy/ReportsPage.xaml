@@ -9,7 +9,7 @@
       Title="ReportsPage">
 
     <Grid Margin="10">
-        <GroupBox Header="Выбор отчёта" HorizontalAlignment="Left" VerticalAlignment="Top" Width="292" Height="108" Margin="70,20,0,0" Background="Beige ">
+        <GroupBox Header="Выбор отчёта" HorizontalAlignment="Left" VerticalAlignment="Top" Width="310" Height="108" Margin="70,20,0,0" Background="Beige ">
             <ComboBox x:Name="ReportsComboBox" Height="30" SelectionChanged="ReportsComboBox_SelectionChanged" Background="#ADD8E6" Margin="0,0,-2,0">
             </ComboBox>
         </GroupBox>

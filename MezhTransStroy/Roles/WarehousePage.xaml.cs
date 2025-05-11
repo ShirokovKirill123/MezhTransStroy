@@ -32,12 +32,43 @@ namespace MezhTransStroy.Roles
     public partial class WarehousePage : Page
     {
         private string currentTable;
+        int notificationcount = 0;
 
         public WarehousePage()
         {
             InitializeComponent();
-
+            NotificationManager.NotificationCountChanged += DisplayNotifications;
+            NotificationManager.LoadNotificationCount();
+            notificationcount = GetNotificationCount();
+            DisplayNotifications();
             this.DataContext = this;
+        }
+
+        private void DisplayNotifications()
+        {
+            NotificationCountText.Text = NotificationManager.NotificationCount.ToString();
+
+            if (NotificationManager.NotificationCount > 0)
+            {
+                BtnNotifications.Visibility = Visibility.Visible;
+                NotificationBadge.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                NotificationCountText.Text = "0";
+            }
+        }
+
+        private int GetNotificationCount()
+        {
+            string уведомленияPath = "уведомления.json";
+            if (File.Exists(уведомленияPath))
+            {
+                string json = File.ReadAllText(уведомленияPath);
+                var уведомления = JsonConvert.DeserializeObject<List<string>>(json);
+                return уведомления?.Count ?? 0;
+            }
+            return 0;
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)

@@ -13,18 +13,18 @@
         Width="200" Height="40" Margin="10"
         HorizontalAlignment="Right"
         VerticalAlignment="Top"
-        Background="Honeydew"
+        Background="Beige"
         FontWeight="Bold"
         Click="ClearNotifications_Click"/>
-        <TextBlock Text="Список уведомлений:" FontSize="24" FontWeight="Bold" Margin="10,40,0,0" HorizontalAlignment="Center"/>
-        <ScrollViewer Margin="55,90,50,0" Height="Auto" MaxHeight="300" MinHeight="50" VerticalAlignment="Top">
+        <TextBlock Text="Список уведомлений:" FontSize="24" FontWeight="Bold" Margin="10,70,0,0" HorizontalAlignment="Center"/>
+        <ScrollViewer Margin="55,120,50,0" Height="Auto" MaxHeight="300" MinHeight="50" VerticalAlignment="Top" Background="White">
             <ListBox x:Name="NotificationList" Height="Auto" VerticalAlignment="Top"/>
         </ScrollViewer>
         <Button Content="Перенаправить материалы со склада на объекты"
           Width="310" Height="30" Margin="12"
           HorizontalAlignment="Left"
           VerticalAlignment="Top"
-          Background="Honeydew"
+          Background="Beige"
           FontWeight="Bold"
           Click="RedirectMaterials_Click"/>
     </Grid>

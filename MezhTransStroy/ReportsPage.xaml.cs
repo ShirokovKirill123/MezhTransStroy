@@ -272,7 +272,7 @@ namespace MezhTransStroy
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Адрес", Binding = new Binding("Адрес") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Дата начала", Binding = new Binding("Дата_Начала") { StringFormat = "dd.MM.yyyy" } });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Дата окончания", Binding = new Binding("Дата_Окончания") { StringFormat = "dd.MM.yyyy" } });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Выделенный бюджет", Binding = new Binding("Выделенный_Бюджет") });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Выделенный бюджет", Binding = new Binding("Выделенный_Бюджет") { StringFormat = "{0:N2} ₽" } });
         }
 
         private void MaterialsReport(СтроительствоEntities context)
@@ -293,7 +293,7 @@ namespace MezhTransStroy
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "ID", Binding = new Binding("id") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Название", Binding = new Binding("Название") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Единица измерения", Binding = new Binding("Единица_Измерения") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость", Binding = new Binding("Стоимость") });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость", Binding = new Binding("Стоимость") { StringFormat = "{0:N2} ₽" } });
         }
 
         private void EquipmentReport(СтроительствоEntities context)
@@ -382,7 +382,7 @@ namespace MezhTransStroy
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Материал", Binding = new Binding("Материал") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Поставщик", Binding = new Binding("Поставщик") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Количество", Binding = new Binding("Количество") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость материалов", Binding = new Binding("Стоимость_Материалов") });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость материалов", Binding = new Binding("Стоимость_Материалов") { StringFormat = "{0:N2} ₽" } });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Дата поступления", Binding = new Binding("Дата_Поступления") { StringFormat = "dd.MM.yyyy" } });
         }
 
@@ -416,7 +416,7 @@ namespace MezhTransStroy
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Поставщик", Binding = new Binding("Поставщик") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Материал", Binding = new Binding("Материал") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Количество", Binding = new Binding("Количество") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость материалов", Binding = new Binding("Стоимость_Материалов") });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость материалов", Binding = new Binding("Стоимость_Материалов") { StringFormat = "{0:N2} ₽" } });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Статус", Binding = new Binding("Статус") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Дата заявки", Binding = new Binding("Дата_Заявки") { StringFormat = "dd.MM.yyyy" } });
         }
@@ -447,7 +447,7 @@ namespace MezhTransStroy
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Объект", Binding = new Binding("Объект") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Материал", Binding = new Binding("Материал") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Количество", Binding = new Binding("Количество") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость материалов", Binding = new Binding("Стоимость_Материалов") });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость материалов", Binding = new Binding("Стоимость_Материалов") { StringFormat = "{0:N2} ₽" } });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Дата передачи", Binding = new Binding("Дата_Передачи") { StringFormat = "dd.MM.yyyy" } });
         }
 
@@ -499,8 +499,8 @@ namespace MezhTransStroy
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Объект", Binding = new Binding("Объект") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Оборудование", Binding = new Binding("Оборудование") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Часы работы", Binding = new Binding("Часы_Работы") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость в час", Binding = new Binding("Стоимость_в_Час") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты", Binding = new Binding("Затраты") });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость в час", Binding = new Binding("Стоимость_в_Час") { StringFormat = "{0:N2} ₽" } });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты", Binding = new Binding("Затраты") { StringFormat = "{0:N2} ₽" } });
         }
 
         private void Salary_Wage_EmployeesReport(СтроительствоEntities context)
@@ -522,9 +522,9 @@ namespace MezhTransStroy
 
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "ID", Binding = new Binding("ID") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Сотрудник", Binding = new Binding("Сотрудник") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Ставка в день", Binding = new Binding("Ставка_в_День") });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Ставка в день", Binding = new Binding("Ставка_в_День") { StringFormat = "{0:N2} ₽" } });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Отработано дней", Binding = new Binding("Отработано_Дней") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты", Binding = new Binding("Затраты") });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты", Binding = new Binding("Затраты") { StringFormat = "{0:N2} ₽" } });
         }
 
         private void DisplayUsersReport(СтроительствоEntities context)

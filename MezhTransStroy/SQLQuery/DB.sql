@@ -73,7 +73,7 @@ CREATE TABLE Заявки (
     id_Материала INT,
     Количество_Материала INT,
     Стоимость_Материалов DECIMAL(15,2),
-    Статус NVARCHAR(50) DEFAULT 'Ожидает обработки',
+    Статус NVARCHAR(50) DEFAULT 'Ожидает обработки', --Обработано, --Уже на объекте
 	Дата_Заявки DATE DEFAULT GETDATE(),
     FOREIGN KEY (id_Объекта) REFERENCES Строительные_Объекты(id),
     FOREIGN KEY (id_Склада) REFERENCES Склады(id),

@@ -318,7 +318,7 @@ namespace MezhTransStroy.Roles
                 var поставщик = context.Поставщики.ToList();
                 var материал = context.Материалы.ToList();
                 var склады = context.Склады.ToList();
-                var статусы = new List<string> { "Ожидает обработки", "Обработано" };
+                var статусы = new List<string> { "Ожидает обработки", "Обработано", "Уже на объекте" };
 
                 var ApplicationsList = context.Заявки
                 .Include(emp => emp.Строительные_Объекты)
@@ -1590,7 +1590,7 @@ namespace MezhTransStroy.Roles
         {
             var mainWindow = Window.GetWindow(this);
             var window = (MainWindow)mainWindow;
-            window.MainFrame.Navigate(new CostsPage());
+            window.MainFrame.Navigate(new ObjectInfoPage());
         }
     }
 }

@@ -88,7 +88,16 @@
             <Button Content="Обновить" Click="ButtonUpdate_Click" Margin="5,10,5,5" Background="YellowGreen" Height="30" FontFamily="Yu Gothic UI Semibold"/>
             <Button Content="Фильтрация" Click="ButtonFilter_Click" Margin="5,10,5,5" Background="BlanchedAlmond" Height="30" FontFamily="Yu Gothic UI Semibold"/>
             <Button Content="Отчёты" Click="ButtonReport_Click" Margin="5,10,5,5" Background="#ADD8E6" Height="30" FontFamily="Yu Gothic UI Semibold"/>
-            <Button Content="Уведомления" Click="ButtonNotifications_Click" Margin="5,10,5,5" Background="Khaki" Height="30" FontFamily="Yu Gothic UI Semibold"/>
+            <Button Content="Уведомления" x:Name="BtnNotifications" Click="ButtonNotifications_Click" Margin="5,10,5,5" Background="Khaki" Height="30" FontFamily="Yu Gothic UI Semibold"/>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Border x:Name="NotificationBadge" Background="Red" Width="25" Height="25" 
+                   CornerRadius="12.5" Margin="0,-70,-130,0"
+                   Visibility="Visible">
+                    <TextBlock x:Name="NotificationCountText" Text="0" Foreground="White"
+                   FontSize="14" FontWeight="Bold"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </Grid>
             <Button Content="Движения материалов" Click="ButtonMaterialMovements_Click" Margin="5,10,5,5" Background="Thistle" Height="30" FontFamily="Yu Gothic UI Semibold"/>
         </StackPanel>
     </Grid>

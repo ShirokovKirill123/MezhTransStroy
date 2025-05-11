@@ -139,8 +139,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="NotificationManager.cs" />
     <Compile Include="NotificationPage.xaml.cs">
       <DependentUpon>NotificationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ObjectInfoPage.xaml.cs">
+      <DependentUpon>ObjectInfoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ReportsPage.xaml.cs">
       <DependentUpon>ReportsPage.xaml</DependentUpon>
@@ -230,6 +234,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ObjectInfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ReportsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -297,6 +305,7 @@
     <Resource Include="Images\stroy.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\кнопка1.png" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>

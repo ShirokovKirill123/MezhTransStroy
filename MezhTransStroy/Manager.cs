@@ -11,6 +11,7 @@ namespace MezhTransStroy
     class Manager
     {
         public static Frame MainFrame { get; set; }
-        public static Ordinator User { get; private set; } = new Ordinator();       
+        public static Ordinator User { get; private set; } = new Ordinator();
+        public static List<string> Notifications { get; set; } = new List<string>();
     }
 }

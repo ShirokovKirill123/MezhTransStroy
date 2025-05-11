@@ -72,7 +72,7 @@ namespace MezhTransStroy
                 return;
             }
 
-            //экспорт в формат
+            // Экспорт в формат Excel
             var saveFileDialog = new Microsoft.Win32.SaveFileDialog
             {
                 Filter = "Excel файлы (*.xlsx)|*.xlsx",
@@ -92,13 +92,25 @@ namespace MezhTransStroy
                         worksheet.Cell(1, i + 1).Value = properties[i].Name;
                     }
 
-                    int row = 2; // Начинаем с 2-й строки т.к. первая строка — заголовки
+                    var culture = new System.Globalization.CultureInfo("ru-RU");
+
+                    int row = 2;
                     foreach (var item in data)
                     {
                         for (int col = 0; col < properties.Length; col++)
                         {
-                            var value = properties[col].GetValue(item)?.ToString() ?? "";
-                            worksheet.Cell(row, col + 1).Value = value;
+                            var value = properties[col].GetValue(item);
+                            var cell = worksheet.Cell(row, col + 1);
+
+                            if (value is decimal || value is double || value is float)
+                            {
+                                cell.Value = Convert.ToDouble(value); 
+                                cell.Style.NumberFormat.Format = "#,##0.00 ₽";
+                            }
+                            else
+                            {
+                                cell.Value = value?.ToString() ?? "";
+                            }
                         }
                         row++;
                     }
@@ -193,12 +205,12 @@ namespace MezhTransStroy
 
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "ID", Binding = new Binding("id") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Название", Binding = new Binding("Название") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Выделенный бюджет", Binding = new Binding("Выделенный_Бюджет") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты на оборудование", Binding = new Binding("ЗатратыНаОборудование") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты на оплату труда", Binding = new Binding("ЗатратыНаЗарплату") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты на материалы", Binding = new Binding("ЗатратыНаМатериалы") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Всего затрат", Binding = new Binding("Всего_Затрат") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Прибыль", Binding = new Binding("Прибыль") });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Выделенный бюджет", Binding = new Binding("Выделенный_Бюджет") { StringFormat = "{0:N2} ₽" } });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты на оборудование", Binding = new Binding("ЗатратыНаОборудование") { StringFormat = "{0:N2} ₽" } });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты на оплату труда", Binding = new Binding("ЗатратыНаЗарплату") { StringFormat = "{0:N2} ₽" } });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты на материалы", Binding = new Binding("ЗатратыНаМатериалы") { StringFormat = "{0:N2} ₽" } });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Всего затрат", Binding = new Binding("Всего_Затрат") { StringFormat = "{0:N2} ₽" } });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Прибыль", Binding = new Binding("Прибыль") { StringFormat = "{0:N2} ₽" } });
         }
 
         private void MaterialsCostReport(СтроительствоEntities context)
@@ -217,7 +229,7 @@ namespace MezhTransStroy
 
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Название", Binding = new Binding("Название") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Единица измерения", Binding = new Binding("Единица_Измерения") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость", Binding = new Binding("Стоимость") });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость", Binding = new Binding("Стоимость") { StringFormat = "{0:N2} ₽" } });
         }
 
         private void OnCostOfMaterialsInWarehousesReport(СтроительствоEntities context)
@@ -246,7 +258,7 @@ namespace MezhTransStroy
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Материал", Binding = new Binding("Материал") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Поставщик", Binding = new Binding("Поставщик") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Количество", Binding = new Binding("Количество") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость материалов", Binding = new Binding("Стоимость_Материалов") });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость материалов", Binding = new Binding("Стоимость_Материалов") { StringFormat = "{0:N2} ₽" } });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Дата поступления", Binding = new Binding("Дата_Поступления") { StringFormat = "dd.MM.yyyy" } });
         }
 
@@ -280,7 +292,7 @@ namespace MezhTransStroy
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Поставщик", Binding = new Binding("Поставщик") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Материал", Binding = new Binding("Материал") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Количество", Binding = new Binding("Количество") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость материалов", Binding = new Binding("Стоимость_Материалов") });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость материалов", Binding = new Binding("Стоимость_Материалов") { StringFormat = "{0:N2} ₽" } });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Статус", Binding = new Binding("Статус") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Дата заявки", Binding = new Binding("Дата_Заявки") { StringFormat = "dd.MM.yyyy" } });
         }
@@ -311,7 +323,7 @@ namespace MezhTransStroy
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Объект", Binding = new Binding("Объект") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Материал", Binding = new Binding("Материал") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Количество", Binding = new Binding("Количество") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость материалов", Binding = new Binding("Стоимость_Материалов") });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость материалов", Binding = new Binding("Стоимость_Материалов") { StringFormat = "{0:N2} ₽" } });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Дата передачи", Binding = new Binding("Дата_Передачи") { StringFormat = "dd.MM.yyyy" } });
         }
 
@@ -334,9 +346,9 @@ namespace MezhTransStroy
 
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "ID", Binding = new Binding("ID") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Сотрудник", Binding = new Binding("Сотрудник") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Ставка в день", Binding = new Binding("Ставка_в_День") });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Ставка в день", Binding = new Binding("Ставка_в_День") { StringFormat = "{0:N2} ₽" } });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Отработано дней", Binding = new Binding("Отработано_Дней") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты", Binding = new Binding("Затраты") });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты", Binding = new Binding("Затраты") { StringFormat = "{0:N2} ₽" } });
         }
 
         private void EquipmentCostReport(СтроительствоEntities context)
@@ -362,8 +374,8 @@ namespace MezhTransStroy
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Объект", Binding = new Binding("Объект") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Оборудование", Binding = new Binding("Оборудование") });
             ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Часы работы", Binding = new Binding("Часы_Работы") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость в час", Binding = new Binding("Стоимость_в_Час") });
-            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты", Binding = new Binding("Затраты") });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость в час", Binding = new Binding("Стоимость_в_Час") { StringFormat = "{0:N2} ₽" } });
+            ReportsDataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты", Binding = new Binding("Затраты") { StringFormat = "{0:N2} ₽" } });
         }        
     }
 }

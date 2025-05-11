@@ -44,8 +44,8 @@ namespace MezhTransStroy
             {
                 File.WriteAllText(уведомленияPath, JsonConvert.SerializeObject(new List<string>(), Formatting.Indented));
                 NotificationList.ItemsSource = new List<string> { "Нет уведомлений" };
-
                 MessageBox.Show("Все уведомления удалены", "Уведомления", MessageBoxButton.OK, MessageBoxImage.Information);
+                NotificationManager.LoadNotificationCount();
             }
         }
 
@@ -127,12 +127,14 @@ namespace MezhTransStroy
 
                             HistoryHelper.Add($"Материал \"{материал.Название}\" в количестве {заявка.Количество_Материала} {материал.Единица_Измерения} отправлен со склада {заявка.id_Склада} на объект \"{объект.Название}\" с id = {объект.id} {DateTime.Now:dd.MM.yyyy HH:mm}");
                         }
+                        заявка.Статус = "Уже на объекте";
                     }
                 }
 
                 context.SaveChanges();
 
                 File.WriteAllText(уведомленияPath, JsonConvert.SerializeObject(уведомления, Formatting.Indented));
+                NotificationManager.LoadNotificationCount();
 
                 NotificationList.ItemsSource = уведомления.Count > 0
                     ? уведомления
