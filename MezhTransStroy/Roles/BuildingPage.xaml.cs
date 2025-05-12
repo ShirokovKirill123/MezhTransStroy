@@ -378,7 +378,42 @@ namespace MezhTransStroy.Roles
                 DataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Затраты") });
                 StackPanelVisibility();
             }
-        }      
+        }
+
+        private void Button_Salary_Wage_Employees_Click(object sender, RoutedEventArgs e)
+        {
+            DataGrid.ContextMenu = null;
+
+            using (var context = new СтроительствоEntities())
+            {
+                var сотрудники = context.Сотрудники.ToList();
+
+                var Salary_WageList = context.Заработная_Плата_Сотрудников
+                .Include(emp => emp.Сотрудники)
+                .ToList();
+
+                DataGrid.ItemsSource = Salary_WageList;
+                currentTable = "Заработная_Плата_Сотрудников";
+
+                DataGrid.Columns.Clear();
+                DataGrid.Columns.Add(new DataGridTextColumn { Header = "ID", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id") });
+                DataGrid.Columns.Add(new DataGridTextColumn { Header = "id сотрудника", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id_Сотрудника") });
+                DataGrid.Columns.Add(new DataGridComboBoxColumn
+                {
+                    Header = "Сотрудник",
+                    ItemsSource = сотрудники,
+                    SelectedValuePath = "id",
+                    DisplayMemberPath = "ФИО",
+                    SelectedValueBinding = new Binding("id_Сотрудника"),
+                    Width = new DataGridLength(1, DataGridLengthUnitType.Star)
+                });
+                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Ставка в день", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Ставка_в_День") });
+                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Отработано дней", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Отработано_Дней") });
+                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Затраты") });
+
+                StackPanelVisibility();
+            }
+        }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -475,7 +510,16 @@ namespace MezhTransStroy.Roles
                         };
                         context.Затраты_На_Оборудование.Add(newEquipment_Сosts);
                         break;
-                                    
+
+                    case "Заработная_Плата_Сотрудников":
+                        var newSalary_Wage = new Заработная_Плата_Сотрудников
+                        {
+                            id_Сотрудника = 1,
+                            Ставка_в_День = 0,
+                            Отработано_Дней = 0
+                        };
+                        context.Заработная_Плата_Сотрудников.Add(newSalary_Wage);
+                        break;
                     default:
                         MessageBox.Show("Неизвестная таблица для добавления");
                         return;
@@ -689,7 +733,32 @@ namespace MezhTransStroy.Roles
                         }
                         context.SaveChanges();
                     }
-                }              
+                }
+
+                else if (currentTable == "Заработная_Плата_Сотрудников")
+                {
+                    var Salary_WageFromGrid = DataGrid.ItemsSource as List<Заработная_Плата_Сотрудников>;
+
+                    if (Salary_WageFromGrid != null)
+                    {
+                        foreach (var Salary_Wage in Salary_WageFromGrid)
+                        {
+                            if (Salary_Wage.id == 0)
+                            {
+                                context.Заработная_Плата_Сотрудников.Add(Salary_Wage);
+                            }
+                            else
+                            {
+                                var existingSalary_Wage = context.Заработная_Плата_Сотрудников.Find(Salary_Wage.id);
+                                if (existingSalary_Wage != null)
+                                {
+                                    context.Entry(existingSalary_Wage).CurrentValues.SetValues(Salary_Wage);
+                                }
+                            }
+                        }
+                        context.SaveChanges();
+                    }
+                }
             }
         }
 
@@ -749,7 +818,10 @@ namespace MezhTransStroy.Roles
                     case "Затраты_На_Оборудование":
                         itemToDelete = context.Затраты_На_Оборудование.FirstOrDefault(equip => equip.id == deleteID);
                         break;
-                
+
+                    case "Заработная_Плата_Сотрудников":
+                        itemToDelete = context.Заработная_Плата_Сотрудников.FirstOrDefault(sw => sw.id == deleteID);
+                        break;
                     default:
                         MessageBox.Show("Неизвестная таблица.");
                         return;
@@ -797,7 +869,10 @@ namespace MezhTransStroy.Roles
                     break;
                 case "Затраты_На_Оборудование":
                     Button_Equipment_Сosts_Click(null, null);
-                    break;               
+                    break;
+                case "Заработная_Плата_Сотрудников":
+                    Button_Salary_Wage_Employees_Click(null, null);
+                    break;
                 default:
                     break;
             }
@@ -853,7 +928,11 @@ namespace MezhTransStroy.Roles
                         else if (item is Затраты_На_Оборудование затраты_На_Оборудование)
                         {
                             matchesId = затраты_На_Оборудование.id_Объекта == id;
-                        }                     
+                        }
+                        else if (item is Заработная_Плата_Сотрудников заработная_Плата_Сотрудников)
+                        {
+                            matchesId = заработная_Плата_Сотрудников.id_Сотрудника == id;
+                        }
                     }
 
                     bool matchesName = true;
@@ -946,7 +1025,17 @@ namespace MezhTransStroy.Roles
                             }
 
                             matchesName = matchesobjects || matchesEquipment;
-                        }                        
+                        }
+                        else if (item is Заработная_Плата_Сотрудников заработная_Плата_Сотрудников)
+                        {
+                            bool matchesEmployees = true;
+                            if (заработная_Плата_Сотрудников.Сотрудники != null && заработная_Плата_Сотрудников.Сотрудники.ФИО != null)
+                            {
+                                matchesEmployees = заработная_Плата_Сотрудников.Сотрудники.ФИО.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0;
+                            }
+
+                            matchesName = matchesEmployees;
+                        }
                         // Фильтрация по обычным строковым свойствам
                         if (!matchesName)
                         {

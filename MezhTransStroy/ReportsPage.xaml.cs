@@ -75,6 +75,7 @@ namespace MezhTransStroy
                 ReportsComboBox.Items.Add(new ComboBoxItem { Content = "Отчёт об оборудовании" });
                 ReportsComboBox.Items.Add(new ComboBoxItem { Content = "Отчёт о поставщиках" });
                 ReportsComboBox.Items.Add(new ComboBoxItem { Content = "Отчёт о затратах на оборудование" });
+                ReportsComboBox.Items.Add(new ComboBoxItem { Content = "Отчёт о заработной плате сотрудников" });
             }
             else if (userRole == "админ")
             {

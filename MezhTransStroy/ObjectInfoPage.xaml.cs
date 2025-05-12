@@ -251,7 +251,9 @@ namespace MezhTransStroy
                 }
 
                 // Расчёт прибыли
-                var profitData = context.Строительные_Объекты
+                if (status == "Завершён")
+                {
+                    var profitData = context.Строительные_Объекты
                     .Where(o => o.id == selectedObject.id)
                     .Select(d => new
                     {
@@ -275,28 +277,32 @@ namespace MezhTransStroy
                     })
                     .FirstOrDefault();
 
-                if (profitData != null)
-                {
-                    var profit = profitData.Выделенный_Бюджет - (profitData.ЗатратыНаОборудование + profitData.ЗатратыНаЗарплату + profitData.ЗатратыНаМатериалы);
-                    txtProfit.Text = $"Прибыль: {profit:C}";
-                    txtProfit.Visibility = Visibility.Visible;
-
-                    if (profit >= 0)
+                    if (profitData != null)
                     {
+                        var profit = profitData.Выделенный_Бюджет - (profitData.ЗатратыНаОборудование + profitData.ЗатратыНаЗарплату + profitData.ЗатратыНаМатериалы);
                         txtProfit.Text = $"Прибыль: {profit:C}";
-                        txtProfit.Foreground = new SolidColorBrush(Colors.Green);
+                        txtProfit.Visibility = Visibility.Visible;
+
+                        if (profit >= 0)
+                        {
+                            txtProfit.Text = $"Прибыль: {profit:C}";
+                            txtProfit.Foreground = new SolidColorBrush(Colors.Green);
+                        }
+                        else
+                        {
+                            txtProfit.Text = $"Убыток: {profit:C}";
+                            txtProfit.Foreground = new SolidColorBrush(Colors.Red);
+                        }
                     }
                     else
                     {
-                        txtProfit.Text = $"Убыток: {profit:C}";
-                        txtProfit.Foreground = new SolidColorBrush(Colors.Red);
+                        txtProfit.Visibility = Visibility.Collapsed;
                     }
                 }
                 else
                 {
                     txtProfit.Visibility = Visibility.Collapsed;
                 }
-
             }
         }
 
