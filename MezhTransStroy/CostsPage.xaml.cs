@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 
 using System.Data.Entity;
 using ClosedXML.Excel;
+using System.Globalization;
 
 namespace MezhTransStroy
 {
@@ -76,23 +77,23 @@ namespace MezhTransStroy
             var saveFileDialog = new Microsoft.Win32.SaveFileDialog
             {
                 Filter = "Excel файлы (*.xlsx)|*.xlsx",
-                FileName = "Отчёт.xlsx"
+                FileName = "Отчёт_по_затратам.xlsx"
             };
 
             if (saveFileDialog.ShowDialog() == true)
             {
                 using (var workbook = new XLWorkbook())
                 {
-                    var worksheet = workbook.AddWorksheet("Отчёт");
+                    var worksheet = workbook.AddWorksheet("Отчёт_по_затратам");
 
                     var properties = data.First().GetType().GetProperties();
 
+                    // Заголовки
                     for (int i = 0; i < properties.Length; i++)
                     {
                         worksheet.Cell(1, i + 1).Value = properties[i].Name;
+                        worksheet.Cell(1, i + 1).Style.Font.Bold = true;
                     }
-
-                    var culture = new System.Globalization.CultureInfo("ru-RU");
 
                     int row = 2;
                     foreach (var item in data)
@@ -102,10 +103,12 @@ namespace MezhTransStroy
                             var value = properties[col].GetValue(item);
                             var cell = worksheet.Cell(row, col + 1);
 
+                            var culture = new CultureInfo("ru-RU");
                             if (value is decimal || value is double || value is float)
                             {
-                                cell.Value = Convert.ToDouble(value); 
-                                cell.Style.NumberFormat.Format = "#,##0.00 ₽";
+                                double number = Convert.ToDouble(value);
+                                string formattedValue = number.ToString("N2", culture) + " ₽";
+                                cell.Value = formattedValue;
                             }
                             else
                             {
@@ -115,6 +118,7 @@ namespace MezhTransStroy
                         row++;
                     }
 
+                    worksheet.Columns().AdjustToContents();
                     workbook.SaveAs(saveFileDialog.FileName);
                 }
 

@@ -16,7 +16,8 @@ using System.Windows.Shapes;
 using ClosedXML.Excel;
 
 
-using System.Data.Entity;   // Для Entity Framework 
+using System.Data.Entity;
+using System.Globalization;   // Для Entity Framework 
 
 namespace MezhTransStroy
 {
@@ -107,7 +108,7 @@ namespace MezhTransStroy
                 return;
             }
 
-            //экспорт в формат
+            // Экспорт в формат Excel
             var saveFileDialog = new Microsoft.Win32.SaveFileDialog
             {
                 Filter = "Excel файлы (*.xlsx)|*.xlsx",
@@ -122,22 +123,37 @@ namespace MezhTransStroy
 
                     var properties = data.First().GetType().GetProperties();
 
+                    // Заголовки
                     for (int i = 0; i < properties.Length; i++)
                     {
                         worksheet.Cell(1, i + 1).Value = properties[i].Name;
+                        worksheet.Cell(1, i + 1).Style.Font.Bold = true;
                     }
 
-                    int row = 2; // Начинаем с 2-й строки т.к. первая строка — заголовки
+                    int row = 2;
                     foreach (var item in data)
                     {
                         for (int col = 0; col < properties.Length; col++)
                         {
-                            var value = properties[col].GetValue(item)?.ToString() ?? "";
-                            worksheet.Cell(row, col + 1).Value = value;
+                            var value = properties[col].GetValue(item);
+                            var cell = worksheet.Cell(row, col + 1);
+
+                            var culture = new CultureInfo("ru-RU");
+                            if (value is decimal || value is double || value is float)
+                            {
+                                double number = Convert.ToDouble(value);
+                                string formattedValue = number.ToString("N2", culture) + " ₽";
+                                cell.Value = formattedValue;
+                            }
+                            else
+                            {
+                                cell.Value = value?.ToString() ?? "";
+                            }
                         }
                         row++;
                     }
 
+                    worksheet.Columns().AdjustToContents();
                     workbook.SaveAs(saveFileDialog.FileName);
                 }
 
