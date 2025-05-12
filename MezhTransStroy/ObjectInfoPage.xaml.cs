@@ -20,10 +20,7 @@ using System.Text.RegularExpressions;
 using System.Globalization;
 
 namespace MezhTransStroy
-{
-    /// <summary>
-    /// Логика взаимодействия для ObjectInfoPage.xaml
-    /// </summary>
+{  
     public partial class ObjectInfoPage : Page
     {
         private СтроительствоEntities context = new СтроительствоEntities();
