@@ -33,7 +33,7 @@
             <Border BorderThickness="1"
               BorderBrush="#FF000000"
               x:Name="SideMenu">
-                <StackPanel Width="219" Orientation="Vertical" HorizontalAlignment="Center" Height="300"  Background="Gray">
+                <StackPanel Width="219" Orientation="Vertical" HorizontalAlignment="Center" Height="330"  Background="Gray">
                     <Button Content="Сотрудники" Height="30" Margin="3" Click="Button_Employees_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
                     <Button Content="Строительные объекты" Height="30" Margin="3" Click="Button_Construction_Objects_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
                     <Button Content="Материалы" Height="30" Margin="3" Click="Button_Materials_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
@@ -42,6 +42,7 @@
                     <Button Content="Распределение материалов на объект" Height="30" Margin="3" Click="Button_Allocation_of_Materials_to_the_Object_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
                     <Button Content="Работа на объекте" Height="30" Margin="3" Click="Button_Work_On_Object_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
                     <Button Content="Затраты на оборудование" Height="30" Margin="3" Click="Button_Equipment_Сosts_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
+                    <Button Content="ЗП сотрудников" Height="30" Margin="3" Click="Button_Salary_Wage_Employees_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
                 </StackPanel>
             </Border>
         </StackPanel>
