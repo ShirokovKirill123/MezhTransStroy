@@ -28,6 +28,7 @@ namespace MezhTransStroy
         public virtual DbSet<Заработная_Плата_Сотрудников> Заработная_Плата_Сотрудников { get; set; }
         public virtual DbSet<Затраты_На_Оборудование> Затраты_На_Оборудование { get; set; }
         public virtual DbSet<Заявки> Заявки { get; set; }
+        public virtual DbSet<История_Перемещений> История_Перемещений { get; set; }
         public virtual DbSet<Материалы> Материалы { get; set; }
         public virtual DbSet<Материалы_На_Складах> Материалы_На_Складах { get; set; }
         public virtual DbSet<Оборудование> Оборудование { get; set; }
@@ -39,5 +40,6 @@ namespace MezhTransStroy
         public virtual DbSet<Склады> Склады { get; set; }
         public virtual DbSet<Сотрудники> Сотрудники { get; set; }
         public virtual DbSet<Строительные_Объекты> Строительные_Объекты { get; set; }
+        public virtual DbSet<Уведомления> Уведомления { get; set; }
     }
 }

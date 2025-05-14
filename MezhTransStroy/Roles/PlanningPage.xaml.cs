@@ -18,9 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using System.IO;
-using System.Text.Json;
 using System.Globalization;
-using Newtonsoft.Json;
 
 using System.Data.Entity; // Для Entity Framework 
 
@@ -396,21 +394,13 @@ namespace MezhTransStroy.Roles
 
         private void Button_ProcessApplications_Click(object sender, RoutedEventArgs e)
         {
-            string уведомленияPath = "уведомления.json";
-            List<string> новыеУведомления = new List<string>();
-            List<string> старыеУведомления = new List<string>();
-
-            if (File.Exists(уведомленияPath))
-            {
-                string старыйJson = File.ReadAllText(уведомленияPath);
-                старыеУведомления = JsonConvert.DeserializeObject<List<string>>(старыйJson) ?? new List<string>();
-            }
-
             using (var context = new СтроительствоEntities())
             {
                 var обработанныеЗаявки = context.Заявки
                     .Where(z => z.Статус == "Обработано")
                     .ToList();
+
+                var существующиеУведомления = NotificationService.Get();
 
                 foreach (var заявка in обработанныеЗаявки)
                 {
@@ -434,41 +424,49 @@ namespace MezhTransStroy.Roles
                         });
                     }
 
-                    var материал = context.Материалы.FirstOrDefault(m => m.id == заявка.id_Материала);
-                    var объект = context.Строительные_Объекты.FirstOrDefault(o => o.id == заявка.id_Объекта);
-                    var поставщик = context.Поставщики.FirstOrDefault(o => o.id == заявка.id_Поставщика);
-
-                    if (материал != null && объект != null)
+                    bool alreadyInHistory = context.История_Перемещений.Any(h => h.id_Заявки == заявка.id);
+                    if (!alreadyInHistory)
                     {
-                        string сообщение = $"Со склада {заявка.id_Склада} необходимо доставить " +
-                                           $"{заявка.Количество_Материала} материала \"{материал.Название}\" " +
-                                           $"на объект \"{объект.Название}\" c id = {объект.id}";
+                        var материал = context.Материалы.FirstOrDefault(m => m.id == заявка.id_Материала);
+                        var объект = context.Строительные_Объекты.FirstOrDefault(o => o.id == заявка.id_Объекта);
+                        var поставщик = context.Поставщики.FirstOrDefault(o => o.id == заявка.id_Поставщика);
 
-                        HistoryHelper.Add($"Материал \"{материал.Название}\" в количестве {заявка.Количество_Материала} {материал.Единица_Измерения} поступил на склад {заявка.id_Склада} от поставщика {поставщик.Название} ({заявка.Дата_Заявки:dd.MM.yyyy})");
-
-                        if (!старыеУведомления.Contains(сообщение))
+                        if (материал != null && объект != null)
                         {
-                            новыеУведомления.Add(сообщение);
+                            string сообщение = $"Со склада {заявка.id_Склада} необходимо доставить " +
+                                               $"{заявка.Количество_Материала} материала \"{материал.Название}\" " +
+                                               $"на объект \"{объект.Название}\" c id = {объект.id}";
+
+                            context.История_Перемещений.Add(new История_Перемещений
+                            {
+                                id_Заявки = заявка.id,
+                                id_Склада = заявка.id_Склада,
+                                id_Объекта = заявка.id_Объекта,
+                                id_Материала = заявка.id_Материала,
+                                Количество = заявка.Количество_Материала,
+                                Дата_Перемещения = DateTime.Now,
+                                Описание = $"Материал \"{материал.Название}\" в количестве {заявка.Количество_Материала} {материал.Единица_Измерения}" +
+                                           $" поступил на склад {заявка.id_Склада} от поставщика {поставщик.Название} ({заявка.Дата_Заявки:dd.MM.yyyy})"
+                            });
+
+                            bool уведомлениеExists = context.Уведомления.Any(u => u.Текст == сообщение);
+
+                            if (!существующиеУведомления.Contains(сообщение))
+                            {
+                                NotificationService.Add(сообщение);
+                                существующиеУведомления.Add(сообщение);
+                            }
                         }
                     }
                 }
 
                 context.SaveChanges();
             }
-
-            if (новыеУведомления.Any())
-            {
-                старыеУведомления.AddRange(новыеУведомления);
-                string новыйJson = JsonConvert.SerializeObject(старыеУведомления, Formatting.Indented);
-                File.WriteAllText(уведомленияPath, новыйJson);
-            }
-
             Button_Materials_In_Stock_Click(null, null);
-
-            MessageBox.Show("Обработанные заявки добавлены в материалы на складах и новые уведомления сохранены",
+            MessageBox.Show("Обработанные заявки добавлены в материалы на складах и уведомления сохранены в базу.",
                 "Готово", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-       
+
         private void ButtonMaterialMovements_Click(object sender, RoutedEventArgs e)
         {
             Manager.MainFrame.Navigate(new MaterialMovementsPage());

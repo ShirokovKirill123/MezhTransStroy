@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Newtonsoft.Json;
 using System.IO;
 using MezhTransStroy.Memento;
 using MezhTransStroy.Roles;
@@ -24,12 +23,18 @@ namespace MezhTransStroy
     /// </summary>
     public partial class NotificationPage : Page
     {
-        private readonly string уведомленияPath = "уведомления.json";
-
         public NotificationPage()
         {
             InitializeComponent();
             LoadNotifications();
+        }
+
+        private void LoadNotifications()
+        {
+            var уведомления = NotificationService.Get();
+            NotificationList.ItemsSource = уведомления.Any()
+            ? уведомления.AsEnumerable().Reverse().ToList()
+            : new List<string> { "Нет уведомлений" };
         }
 
         private void ClearNotifications_Click(object sender, RoutedEventArgs e)
@@ -42,32 +47,10 @@ namespace MezhTransStroy
 
             if (result == MessageBoxResult.Yes)
             {
-                File.WriteAllText(уведомленияPath, JsonConvert.SerializeObject(new List<string>(), Formatting.Indented));
+                NotificationService.Clear();
                 NotificationList.ItemsSource = new List<string> { "Нет уведомлений" };
                 MessageBox.Show("Все уведомления удалены", "Уведомления", MessageBoxButton.OK, MessageBoxImage.Information);
                 NotificationManager.LoadNotificationCount();
-            }
-        }
-
-        private void LoadNotifications()
-        {
-            if (File.Exists(уведомленияPath))
-            {
-                string json = File.ReadAllText(уведомленияPath);
-                var уведомления = JsonConvert.DeserializeObject<List<string>>(json);
-
-                if (уведомления != null && уведомления.Count > 0)
-                {
-                    NotificationList.ItemsSource = уведомления;
-                }
-                else
-                {
-                    NotificationList.ItemsSource = new List<string> { "Нет уведомлений" };
-                }
-            }
-            else
-            {
-                NotificationList.ItemsSource = new List<string> { "Нет уведомлений" };
             }
         }
 
@@ -80,15 +63,6 @@ namespace MezhTransStroy
                     .ToList();
 
                 int перенаправлено = 0;
-
-                string уведомленияPath = "уведомления.json";
-                List<string> уведомления = new List<string>();
-
-                if (File.Exists(уведомленияPath))
-                {
-                    string json = File.ReadAllText(уведомленияPath);
-                    уведомления = JsonConvert.DeserializeObject<List<string>>(json) ?? new List<string>();
-                }
 
                 foreach (var заявка in обработанныеЗаявки)
                 {
@@ -123,22 +97,29 @@ namespace MezhTransStroy
                                                $"{заявка.Количество_Материала} материала \"{материал.Название}\" " +
                                                $"на объект \"{объект.Название}\" c id = {объект.id}";
 
-                            уведомления.Remove(сообщение);
+                            NotificationService.Get()
+                                .Where(u => u == сообщение)
+                                .ToList()
+                                .ForEach(u => NotificationService.Clear());
 
-                            HistoryHelper.Add($"Материал \"{материал.Название}\" в количестве {заявка.Количество_Материала} {материал.Единица_Измерения} отправлен со склада {заявка.id_Склада} на объект \"{объект.Название}\" с id = {объект.id} {DateTime.Now:dd.MM.yyyy HH:mm}");
+                            HistoryService.Add(
+                                 заявка.id,                              
+                                 заявка.id_Склада.Value,                 
+                                 заявка.id_Объекта.Value,                
+                                 заявка.id_Материала.Value,              
+                                 заявка.Количество_Материала.Value,      
+                                 $"Материал \"{материал.Название}\" в количестве {заявка.Количество_Материала} {материал.Единица_Измерения} " +
+                                 $"отправлен со склада {заявка.id_Склада} на объект \"{объект.Название}\" с id = {объект.id} {DateTime.Now:dd.MM.yyyy HH:mm}" );
                         }
+
                         заявка.Статус = "Уже на объекте";
                     }
                 }
 
-                context.SaveChanges();
+                context.SaveChanges();            
 
-                File.WriteAllText(уведомленияPath, JsonConvert.SerializeObject(уведомления, Formatting.Indented));
+                LoadNotifications();
                 NotificationManager.LoadNotificationCount();
-
-                NotificationList.ItemsSource = уведомления.Count > 0
-                    ? уведомления
-                    : new List<string> { "Нет уведомлений" };
 
                 if (перенаправлено > 0)
                 {

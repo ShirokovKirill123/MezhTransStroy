@@ -18,9 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using System.IO;
-using System.Text.Json;
 using System.Globalization;
-using Newtonsoft.Json;
 
 using System.Data.Entity; // Для Entity Framework 
 

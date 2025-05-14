@@ -19,6 +19,7 @@ namespace MezhTransStroy
         {
             this.Затраты_На_Оборудование = new HashSet<Затраты_На_Оборудование>();
             this.Заявки = new HashSet<Заявки>();
+            this.История_Перемещений = new HashSet<История_Перемещений>();
             this.Работа_На_Объекте = new HashSet<Работа_На_Объекте>();
             this.Распределение_Материалов_На_Объект = new HashSet<Распределение_Материалов_На_Объект>();
         }
@@ -34,6 +35,8 @@ namespace MezhTransStroy
         public virtual ICollection<Затраты_На_Оборудование> Затраты_На_Оборудование { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Заявки> Заявки { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<История_Перемещений> История_Перемещений { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Работа_На_Объекте> Работа_На_Объекте { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

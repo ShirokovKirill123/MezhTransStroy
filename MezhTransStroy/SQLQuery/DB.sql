@@ -132,3 +132,25 @@ CREATE TABLE Пользователи
   Уровень_Доступа VARCHAR(50)
 );
 
+-- Таблица для уведомлений
+CREATE TABLE Уведомления (
+    id INT PRIMARY KEY IDENTITY,
+    Текст NVARCHAR(MAX) NOT NULL,
+    Дата_Создания DATETIME DEFAULT GETDATE()
+);
+
+-- Таблица для истории перемещений материалов
+CREATE TABLE История_Перемещений (
+    id INT PRIMARY KEY IDENTITY,
+	id_Заявки INT,
+    id_Склада INT,
+    id_Объекта INT,
+    id_Материала INT,
+    Количество INT,
+    Дата_Перемещения DATETIME DEFAULT GETDATE(),
+    Описание NVARCHAR(MAX),
+    FOREIGN KEY (id_Склада) REFERENCES Склады(id),
+    FOREIGN KEY (id_Объекта) REFERENCES Строительные_Объекты(id),
+    FOREIGN KEY (id_Материала) REFERENCES Материалы(id),
+	FOREIGN KEY (id_Заявки) REFERENCES Заявки(id)
+);

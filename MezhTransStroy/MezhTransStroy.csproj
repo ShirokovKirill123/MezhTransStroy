@@ -120,7 +120,7 @@
     <Compile Include="CostsPage.xaml.cs">
       <DependentUpon>CostsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HistoryHelper.cs" />
+    <Compile Include="HistoryService.cs" />
     <Compile Include="MaterialMovementsPage.xaml.cs">
       <DependentUpon>MaterialMovementsPage.xaml</DependentUpon>
     </Compile>
@@ -140,6 +140,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="NotificationManager.cs" />
+    <Compile Include="NotificationService.cs" />
     <Compile Include="NotificationPage.xaml.cs">
       <DependentUpon>NotificationPage.xaml</DependentUpon>
     </Compile>
@@ -168,6 +169,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Заявки.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="История_Перемещений.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Материалы.cs">
@@ -201,6 +205,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Строительные_Объекты.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Уведомления.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Page Include="Authorization.xaml">

@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Newtonsoft.Json;
 using System.IO;
 
 namespace MezhTransStroy
@@ -22,8 +21,6 @@ namespace MezhTransStroy
     /// </summary>
     public partial class MaterialMovementsPage : Page
     {
-        private readonly string историяPath = "перемещения.json";
-
         public MaterialMovementsPage()
         {
             InitializeComponent();
@@ -32,23 +29,16 @@ namespace MezhTransStroy
 
         private void LoadHistory()
         {
-            if (File.Exists(историяPath))
+            using (var context = new СтроительствоEntities())
             {
-                string json = File.ReadAllText(историяPath);
-                var история = JsonConvert.DeserializeObject<List<string>>(json);
+                var история = context.История_Перемещений
+                    .OrderBy(h => h.id)
+                    .Select(h => h.Описание)
+                    .ToList();
 
-                if (история != null && история.Count > 0)
-                {
-                    NotificationList.ItemsSource = история;
-                }
-                else
-                {
-                    NotificationList.ItemsSource = new List<string> { "История пуста" };
-                }
-            }
-            else
-            {
-                NotificationList.ItemsSource = new List<string> { "Файл истории не найден" };
+                NotificationList.ItemsSource = история.Any()
+                    ? история
+                    : new List<string> { "История пуста" };
             }
         }
 
@@ -59,8 +49,13 @@ namespace MezhTransStroy
 
             if (result == MessageBoxResult.Yes)
             {
-                File.WriteAllText(историяPath, JsonConvert.SerializeObject(new List<string>(), Formatting.Indented));
-                NotificationList.ItemsSource = new List<string> { "История очищена" };
+                using (var context = new СтроительствоEntities())
+                {
+                    context.История_Перемещений.RemoveRange(context.История_Перемещений);
+                    context.SaveChanges();
+                }
+
+                LoadHistory();
                 MessageBox.Show("История движений успешно очищена", "Готово", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }

@@ -18,9 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using System.IO;
-using System.Text.Json;
 using System.Globalization;
-using Newtonsoft.Json;
 
 using System.Data.Entity; // Для Entity Framework 
 
@@ -32,18 +30,16 @@ namespace MezhTransStroy.Roles
     public partial class WarehousePage : Page
     {
         private string currentTable;
-        int notificationcount = 0;
 
         public WarehousePage()
         {
             InitializeComponent();
             NotificationManager.NotificationCountChanged += DisplayNotifications;
             NotificationManager.LoadNotificationCount();
-            notificationcount = GetNotificationCount();
             DisplayNotifications();
             this.DataContext = this;
         }
-
+        
         private void DisplayNotifications()
         {
             NotificationCountText.Text = NotificationManager.NotificationCount.ToString();
@@ -57,18 +53,6 @@ namespace MezhTransStroy.Roles
             {
                 NotificationCountText.Text = "0";
             }
-        }
-
-        private int GetNotificationCount()
-        {
-            string уведомленияPath = "уведомления.json";
-            if (File.Exists(уведомленияPath))
-            {
-                string json = File.ReadAllText(уведомленияPath);
-                var уведомления = JsonConvert.DeserializeObject<List<string>>(json);
-                return уведомления?.Count ?? 0;
-            }
-            return 0;
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
