@@ -1,5 +1,4 @@
 ﻿using MezhTransStroy.Memento;
-using Newtonsoft.Json;
 using System.IO;
 using MezhTransStroy.Roles;
 using System;
@@ -24,31 +23,13 @@ namespace MezhTransStroy
     /// </summary>
     public partial class Authorization : Page
     {
-        // Объект паттерна Memento
         private Caretaker _caretaker = new Caretaker();
-        private const string MementoFileName = "memento.json";
 
         public Authorization()
         {
             InitializeComponent();
             Manager.MainFrame = SecondFrame;
-            RestoreLoginFromMemento();
-        }
-
-        private void RestoreLoginFromMemento()
-        {
-            if (File.Exists(MementoFileName))
-            {
-                string json = File.ReadAllText(MementoFileName);
-                _caretaker.Memento = JsonConvert.DeserializeObject<Memento.Memento>(json);               
-            }
-        }
-
-        private void SaveLoginToMemento()
-        {
-            string json = JsonConvert.SerializeObject(_caretaker.Memento);
-            File.WriteAllText(MementoFileName, json);
-        }        
+        }         
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
@@ -65,8 +46,6 @@ namespace MezhTransStroy
                     Manager.User.Role = user.Уровень_Доступа;
 
                     _caretaker.Memento = Manager.User.CreateMemento();
-
-                    SaveLoginToMemento();
 
                     MainWindow mainWindow = new MainWindow();
 
