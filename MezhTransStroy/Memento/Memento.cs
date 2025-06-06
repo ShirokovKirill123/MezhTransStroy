@@ -11,11 +11,13 @@ namespace MezhTransStroy.Memento
     {
         public string Username { get; private set; }
         public string Role { get; private set; }
+        public int Employee { get; private set; }
 
-        public Memento(string username, string role)
+        public Memento(string username, string role, int employee)
         {
             Username = username;
             Role = role;
+            Employee = employee;
         }
     }
 }

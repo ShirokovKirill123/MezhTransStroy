@@ -1,0 +1,88 @@
+﻿<Page x:Class="MezhTransStroy.ForwardedMaterialsAtObject"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MezhTransStroy"
+      mc:Ignorable="d" 
+      d:DesignHeight="1000" d:DesignWidth="1500"
+      Title="ForwardedMaterialsAtObject">
+
+    <Page.Resources>
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                            CornerRadius="10"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Margin="10,0"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+
+        <Button Content="Экспорт в документ"
+                Style="{StaticResource RoundedButtonStyle}"
+                Width="191" Height="54"
+                Margin="30,12,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Background="LightBlue"
+                Click="ExportToWord_Click"/>
+
+        <Button Content="Очистить все записи"
+                Style="{StaticResource RoundedButtonStyle}"
+                Width="191" Height="54"
+                Margin="1150,12,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Background="Tomato"
+                Click="ClearAllForwardedMaterials_Click"/>
+
+        <Button Width="191" Height="54"
+                Margin="920,12,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Background="Khaki"
+                Style="{StaticResource RoundedButtonStyle}"
+                Click="ClearSelectedNotification_Click">
+            <TextBlock TextAlignment="Center">
+                Очистить
+                <LineBreak/>
+                выбранную запись
+            </TextBlock>
+        </Button>
+
+        <!-- Заголовок -->
+        <TextBlock Text="Переправленные на объект материалы:"
+                   FontSize="24"
+                   FontWeight="Bold"
+                   Margin="10,100,0,0"
+                   HorizontalAlignment="Center"/>
+
+        <GroupBox Header="Список материалов"
+                  Margin="55,150,50,30"
+                  Background="Beige"
+                  BorderBrush="#4CAF50"
+                  BorderThickness="1">
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Auto"
+                          Background="White">
+                <ListBox x:Name="ForwardedMaterialsList"
+                         BorderThickness="0"
+                         Background="White"
+                         SelectionMode="Single"/>
+            </ScrollViewer>
+        </GroupBox>
+    </Grid>
+</Page>

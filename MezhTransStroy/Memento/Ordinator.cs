@@ -11,16 +11,18 @@ namespace MezhTransStroy.Memento
     {
         public string Username { get; set; }
         public string Role { get; set; }
+        public int Employee { get; set; }
 
         public Memento CreateMemento()
         {
-            return new Memento(Username, Role);
+            return new Memento(Username, Role, Employee);
         }
 
         public void SetMemento(Memento memento)
         {
             Username = memento.Username;
             Role = memento.Role;
+            Employee = memento.Employee;
         }
     }
 }

@@ -5,31 +5,176 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MezhTransStroy"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+       d:DesignHeight="1000" d:DesignWidth="1500"
       Title="ReportsPage">
 
+    <Page.Resources>
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="10"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Margin="10,0"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        
+        
+    </Page.Resources>
+
     <Grid Margin="10">
-        <GroupBox Header="Выбор отчёта" HorizontalAlignment="Left" VerticalAlignment="Top" Width="310" Height="108" Margin="70,20,0,0" Background="Beige ">
-            <ComboBox x:Name="ReportsComboBox" Height="30" SelectionChanged="ReportsComboBox_SelectionChanged" Background="#ADD8E6" Margin="0,0,-2,0">
-            </ComboBox>
+        <GroupBox Header="Выбор отчёта"
+          HorizontalAlignment="Left"
+          VerticalAlignment="Top"
+          Width="312"
+          Height="108"
+          Margin="70,20,0,0"
+          Background="Beige"
+          BorderBrush="#4CAF50"
+          BorderThickness="1">
+            <Border Background="#F5DEB3"
+            CornerRadius="0"
+            BorderBrush="#CD853F"
+            BorderThickness="1"
+            Margin="0">
+                <ComboBox x:Name="ReportsComboBox"
+                  Height="30"
+                  Background="Transparent"
+                  Foreground="Black"
+                  Margin="4,0,4,0"
+                  SelectionChanged="ReportsComboBox_SelectionChanged"
+                  FontFamily="Yu Gothic UI Semibold" FontSize="12">
+                    <ComboBox.ItemContainerStyle>
+                        <Style TargetType="ComboBoxItem">
+                            <Setter Property="Background" Value="#FFF5DEB3"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Padding" Value="4,2"/>
+                        </Style>
+                    </ComboBox.ItemContainerStyle>
+                </ComboBox>
+            </Border>
         </GroupBox>
 
-        <GroupBox Header="Данные отчёта" Margin="70,150,10,50" Background="Beige ">
-            <DataGrid x:Name="ReportsDataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ColumnWidth="*" >
-                <DataGrid.Resources>
-                    <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Border Background="Beige"
+                CornerRadius="15"
+                BorderBrush="#4CAF50"
+                BorderThickness="1"
+                Padding="6"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Margin="0,-3,50,0"
+                Width="220">
+            <StackPanel>
+                <TextBlock Text="ID"
+                           FontFamily="Yu Gothic UI Semibold"
+                           HorizontalAlignment="Center"/>
+                <TextBox x:Name="TextBoxID"
+                         Height="20"
+                         Width="68"
+                         Margin="0,5,0,10"
+                         HorizontalAlignment="Center"/>
+
+                <TextBlock Text="Название"
+                           FontFamily="Yu Gothic UI Semibold"
+                           HorizontalAlignment="Center"/>
+                <TextBox x:Name="TextBoxName"
+                         Height="20"
+                         Width="180"
+                         Margin="0,5,0,10"
+                         HorizontalAlignment="Center"/>
+
+                <Button Content="Фильтрация"
+                        Style="{StaticResource RoundedButtonStyle}"
+                        Width="180"
+                        Height="35"
+                        FontFamily="Yu Gothic UI Semibold"
+                        FontSize="12"
+                        Background="RosyBrown"
+                        HorizontalAlignment="Center"
+                        Click="ButtonFilter_Click"/>
+            </StackPanel>
+        </Border>
+
+        <GroupBox Header="Данные отчёта"
+                  Margin="70,150,10,50"
+                  Background="Beige"
+                  BorderBrush="#4CAF50"
+                  BorderThickness="1">
+            <DataGrid x:Name="ReportsDataGrid"
+          IsReadOnly="True"
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch"
+          ColumnWidth="*"
+          AutoGenerateColumns="False"
+          RowBackground="Beige"
+          BorderThickness="1"
+          BorderBrush="Black"
+          GridLinesVisibility="All"
+          VerticalGridLinesBrush="Gray"
+          HorizontalGridLinesBrush="Gray"
+          HeadersVisibility="Column">
+
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Padding" Value="5"/>
+                        <Setter Property="BorderThickness" Value="0.5"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="FontSize" Value="13"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#FFB0E0E6"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </Style.Triggers>
                     </Style>
-                </DataGrid.Resources>
+                </DataGrid.CellStyle>
+
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="FontFamily" Value="Yu Gothic UI Semibold"/>
+                        <Setter Property="FontSize" Value="13"/>
+                        <Setter Property="BorderBrush" Value="Black"/>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    </Style>
+                </DataGrid.RowStyle>
             </DataGrid>
         </GroupBox>
 
-        <Button x:Name="ExportButton" Content="Экспортировать" HorizontalAlignment="Right" VerticalAlignment="Top" Width="180" Height="50" Margin="0,50,54,10" FontFamily="Yu Gothic UI Semibold" FontSize="12" Background="Beige " Click="ExportButton_Click">
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5"/>
-                </Style>
-            </Button.Resources>
-        </Button>
+        <Button x:Name="ExportButton"
+                Content="Экспорт в документ"
+                Style="{StaticResource RoundedButtonStyle}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Width="180"
+                Height="50"
+                Margin="0,50,230,10"
+                FontFamily="Yu Gothic UI Semibold"
+                FontSize="12"
+                Background="LightBlue"
+                Click="ExportButton_Click"/>
+
+        <Button x:Name="RefreshButton"
+                Content="Обновить"
+                Style="{StaticResource RoundedButtonStyle}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Width="180"
+                Height="50"
+                Margin="0,50,-500,10"
+                FontFamily="Yu Gothic UI Semibold"
+                FontSize="12"
+                Background="Khaki"
+                Click="RefreshButton_Click"/>
     </Grid>
 </Page>

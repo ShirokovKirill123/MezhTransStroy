@@ -5,8 +5,43 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MezhTransStroy.Roles"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+       d:DesignHeight="1000" d:DesignWidth="1200"
       Title="PlanningPage">
+
+    <Page.Resources>
+        <Style TargetType="Button" x:Key="CommonButtonStyle">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="SandyBrown"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                 CornerRadius="8"
+                 BorderBrush="{TemplateBinding BorderBrush}"
+                 BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource CommonButtonStyle}" />
+
+        <Storyboard x:Key="ShowMenuStoryboard">
+            <DoubleAnimation Storyboard.TargetName="SideMenu"
+                   Storyboard.TargetProperty="Opacity"
+                   From="0" To="1" Duration="0:0:0.3"/>
+        </Storyboard>
+
+        <Storyboard x:Key="HideMenuStoryboard">
+            <DoubleAnimation Storyboard.TargetName="SideMenu"
+                   Storyboard.TargetProperty="Opacity"
+                   From="1" To="0" Duration="0:0:0.3"/>
+        </Storyboard>
+    </Page.Resources>
 
     <Grid PreviewMouseDown="Grid_PreviewMouseDown" Background="Transparent">
         <Grid.RowDefinitions>
@@ -21,7 +56,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel>
-            <Button x:Name="MenuButton" Height="70"  HorizontalAlignment="Left" Click="MenuButton_Click">
+            <Button x:Name="MenuButton" Style="{x:Null}"  Height="70" HorizontalAlignment="Left" Click="MenuButton_Click" Tag="Меню" Margin="3,3,0,0">
                 <Image Source="\Images\меню.png" HorizontalAlignment="Center"/>
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -33,38 +68,89 @@
             <Border BorderThickness="1"
            BorderBrush="#FF000000"
            x:Name="SideMenu">
-                <StackPanel Width="219" Orientation="Vertical" HorizontalAlignment="Center" Height="470"  Background="Gray">
+                <StackPanel Width="220" Orientation="Vertical" HorizontalAlignment="Center" Height="459"  Background="Gray">
                     <Button Content="Отделы" Height="30" Margin="3" Click="Button_Sections_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
                     <Button Content="Сотрудники" Height="30" Margin="3" Click="Button_Employees_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
                     <Button Content="Строительные объекты" Height="30" Margin="3" Click="Button_Construction_Objects_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
                     <Button Content="Материалы" Height="30" Margin="3" Click="Button_Materials_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
                     <Button Content="Оборудование" Height="30" Margin="3" Click="Button_Equipment_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
+                    <Button Content="Оборудование на складах" Height="25" Margin="3" Click="Equipment_In_Storage_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
+                    <Button Content="Распределение оборудования на объекты" Height="25" Margin="3" Click="Distribution_Of_Equipment_To_The_Site_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
                     <Button Content="Поставщики" Height="30" Margin="3" Click="Button_Suppliers_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
                     <Button Content="Склады" Height="30" Margin="3" Click="Button_Warehouse_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
                     <Button Content="Материалы на складах" Height="30" Margin="3" Click="Button_Materials_In_Stock_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
                     <Button Content="Заявки" Height="30" Margin="3" Click="Button_Applications_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
-                    <Button Content="Распределение материалов на объект" Height="30" Margin="3" Click="Button_Allocation_of_Materials_to_the_Object_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
-                    <Button Content="Работа на объекте" Height="30" Margin="3" Click="Button_Work_On_Object_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
-                    <Button Content="Затраты на оборудование" Height="30" Margin="3" Click="Button_Equipment_Сosts_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
-                    <Button Content="ЗП сотрудников" Height="30" Margin="3" Click="Button_Salary_Wage_Employees_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
+                    <Button Content="Распределение материалов на объекты" Height="30" Margin="3" Click="Button_Allocation_of_Materials_to_the_Object_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
+                    <Button Content="Работа на объектах" Height="30" Margin="3" Click="Button_Work_On_Object_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
                 </StackPanel>
             </Border>
         </StackPanel>
 
-        <DataGrid CanUserAddRows="False" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0" x:Name="DataGrid" AutoGenerateColumns="False"  ColumnWidth="*" IsReadOnly="False" Padding="0,0,0,0">
-            <DataGrid.Resources>
-                <Style TargetType="DataGridColumnHeader">
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <TextBlock x:Name="TableNameTextBlock"
+        Text=""
+        FontSize="18"
+        FontWeight="Bold"
+        Foreground="Black"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Top"
+        Grid.Column="1"
+        Grid.Row="0"
+        Margin="0,23,0,0"
+        Visibility="Collapsed"/>
+
+        <DataGrid Margin="0,60,0,0"
+          CanUserAddRows="False"
+          HorizontalAlignment="Center"
+          VerticalAlignment="Top"
+          Grid.Column="1"
+          Grid.Row="0"
+          x:Name="DataGrid"
+          AutoGenerateColumns="False"
+          MinWidth="900"
+          IsReadOnly="False"
+          Padding="0"
+          Background="White"
+          RowBackground="#FFF8DC"
+          BorderThickness="1"
+          BorderBrush="Black"
+          GridLinesVisibility="All"
+          VerticalGridLinesBrush="Gray"
+          HorizontalGridLinesBrush="Gray"
+          HeadersVisibility="Column">
+
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="Padding" Value="6"/>
+                    <Setter Property="FontSize" Value="13"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="0.5"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#FFB0E0E6"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
-            </DataGrid.Resources>
+            </DataGrid.CellStyle>
+
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="FontFamily" Value="Yu Gothic UI Semibold"/>
+                    <Setter Property="FontSize" Value="13"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                </Style>
+            </DataGrid.RowStyle>
+
             <DataGrid.Style>
                 <Style TargetType="DataGrid">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Items.Count, ElementName=DataGrid}" Value="0">
-                            <Setter Property="Visibility" Value="Hidden" />
+                            <Setter Property="Visibility" Value="Hidden"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Items.Count, ElementName=DataGrid}" Value="1">
-                            <Setter Property="Visibility" Value="Visible" />
+                            <Setter Property="Visibility" Value="Visible"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -92,10 +178,27 @@
             <Button Content="Удалить" Click="ButtonDelete_Click" Margin="5,10,5,5" Background="Tomato" Height="30" FontFamily="Yu Gothic UI Semibold"/>
             <Button Content="Обновить" Click="ButtonUpdate_Click" Margin="5,10,5,5" Background="YellowGreen" Height="30" FontFamily="Yu Gothic UI Semibold"/>
             <Button Content="Фильтрация" Click="ButtonFilter_Click" Margin="5,10,5,5" Background="BlanchedAlmond" Height="30" FontFamily="Yu Gothic UI Semibold"/>
+            <Button Click="Button_Redirection_Click"
+                 Margin="5,10,5,5"
+                 Background="PaleGreen"
+                 Height="40"
+                 FontFamily="Yu Gothic UI Semibold">
+                <TextBlock TextAlignment="Center">
+                 Перенаправить
+                 <LineBreak/>
+                 материалы
+                 на склад
+                </TextBlock>
+            </Button>
+            <Button Click="ButtonApplicationsFromAConstructionSite_Click" Margin="5,5,5,5" Background="NavajoWhite" Height="40" FontFamily="Yu Gothic UI Semibold" >
+                <TextBlock TextAlignment="Center">
+                 Заявки от
+                 <LineBreak/>
+                 строительного отдела
+                </TextBlock>
+            </Button>
             <Button Content="Отчёты" Click="ButtonReport_Click" Margin="5,10,5,5" Background="#ADD8E6" Height="30" FontFamily="Yu Gothic UI Semibold"/>
-            <Button Content="Обработать заявки" Click="Button_ProcessApplications_Click" Margin="5,10,5,5" Background="Beige" Height="30" FontFamily="Yu Gothic UI Semibold"/>
-            <Button Content="Движения материалов" Click="ButtonMaterialMovements_Click" Margin="5,10,5,5" Background="Thistle" Height="30" FontFamily="Yu Gothic UI Semibold"/>
-            <Button Content="Затраты" Click="ButtonCosts_Click" Margin="5,10,5,5" Background="SandyBrown" Height="30" FontFamily="Yu Gothic UI Semibold"/>
+            <Button Content="Движения ресурсов" Click="ButtonMaterialMovements_Click" Margin="5,10,5,5" Background="Thistle" Height="30" FontFamily="Yu Gothic UI Semibold"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -21,6 +21,9 @@ using System.IO;
 using System.Globalization;
 
 using System.Data.Entity; // Для Entity Framework 
+using System.Data.Entity.Infrastructure;
+using MezhTransStroy.Database;
+using System.Windows.Media.Animation;
 
 namespace MezhTransStroy.Roles
 {
@@ -30,17 +33,53 @@ namespace MezhTransStroy.Roles
     public partial class BuildingPage : Page
     {
         private string currentTable;
+        private DataGridLoader _loader;
 
         public BuildingPage()
         {
             InitializeComponent();
-
             this.DataContext = this;
+            _loader = new DataGridLoader(DataGrid);          
+        }
+
+        private void SetTableName(string tableName)
+        {
+            TableNameTextBlock.Text = tableName;
+            TableNameTextBlock.Visibility = Visibility.Visible;
+        }
+
+        private void SetTableNameFromButton(object sender)
+        {
+            if (sender is Button button)
+            {
+                if (button.Content is string contentText)
+                {
+                    SetTableName(contentText);
+                }
+                else
+                {
+                    TableNameTextBlock.Visibility = Visibility.Collapsed;
+                }
+            }
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
-            SideMenu.Visibility = SideMenu.Visibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
+            if (SideMenu.Visibility != Visibility.Visible)
+            {
+                SideMenu.Visibility = Visibility.Visible;
+                var showStoryboard = (Storyboard)FindResource("ShowMenuStoryboard");
+                showStoryboard.Begin();
+            }
+            else
+            {
+                var hideStoryboard = (Storyboard)FindResource("HideMenuStoryboard");
+                hideStoryboard.Completed += (s, ev) =>
+                {
+                    SideMenu.Visibility = Visibility.Collapsed;
+                };
+                hideStoryboard.Begin();
+            }
         }
 
         private void Grid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -73,141 +112,276 @@ namespace MezhTransStroy.Roles
             {
                 StackPanel2.Visibility = Visibility.Visible;
             }
-        }       
+        }
 
-        private void Button_Employees_Click(object sender, RoutedEventArgs e)
+        private void Button_Sections_Click(object sender, RoutedEventArgs e)
         {
             DataGrid.ContextMenu = null;
-
-            using (var context = new СтроительствоEntities())
-            {
-                var отделы = context.Отделы.ToList();
-
-                var EmployeesList = context.Сотрудники
-                    .Include(lfa => lfa.Отделы)
-                   .ToList();
-                DataGrid.ItemsSource = EmployeesList;
-                currentTable = "Сотрудники";
-
-                DataGrid.Columns.Clear();
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "ID", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "ФИО", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("ФИО") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Должность", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Должность") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Квалификация", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Квалификация") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Дата приёма", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Дата_Приёма") { StringFormat = "dd.MM.yyyy" } });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Контакты", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Контакты") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "id отдела", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id_Отдела") });
-                DataGrid.Columns.Add(new DataGridComboBoxColumn
-                {
-                    Header = "Отделы",
-                    ItemsSource = отделы,
-                    SelectedValuePath = "id",
-                    DisplayMemberPath = "Название",
-                    SelectedValueBinding = new Binding("id_Отдела")
-                });
-                DataGrid.Columns[1].Width = new DataGridLength(2, DataGridLengthUnitType.Star);
-                DataGrid.Columns[2].Width = new DataGridLength(2, DataGridLengthUnitType.Star);
-                DataGrid.Columns[3].Width = new DataGridLength(1.5, DataGridLengthUnitType.Star);
-                DataGrid.Columns[7].Width = new DataGridLength(1.5, DataGridLengthUnitType.Star);
-                StackPanelVisibility();
-            }
+            SetTableNameFromButton(sender);
+            _loader.LoadSections();
+            currentTable = "Отделы";
+            StackPanelVisibility();
         }
 
         private void Button_Construction_Objects_Click(object sender, RoutedEventArgs e)
         {
             DataGrid.ContextMenu = null;
-
-            using (var context = new СтроительствоEntities())
-            {
-                var Construction_ObjectsList = context.Строительные_Объекты.ToList();
-
-                DataGrid.ItemsSource = Construction_ObjectsList;
-                currentTable = "Строительные_Объекты";
-
-                DataGrid.Columns.Clear();
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "ID", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Название", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Название") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Адрес", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Адрес") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Дата начала", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Дата_Начала") { StringFormat = "dd.MM.yyyy" } });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Дата окончания", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Дата_Окончания") { StringFormat = "dd.MM.yyyy" } });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Выделенный бюджет", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Выделенный_Бюджет") });
-
-
-                StackPanelVisibility();
-            }
+            SetTableNameFromButton(sender);
+            _loader.LoadConstructionObjects();
+            currentTable = "Строительные_Объекты";
+            StackPanelVisibility();
         }
 
         private void Button_Materials_Click(object sender, RoutedEventArgs e)
         {
             DataGrid.ContextMenu = null;
-
-            using (var context = new СтроительствоEntities())
-            {
-                var MaterialsList = context.Материалы.ToList();
-
-                DataGrid.ItemsSource = MaterialsList;
-                currentTable = "Материалы";
-
-                DataGrid.Columns.Clear();
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "ID", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Название", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Название") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Единица измерения", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Единица_Измерения") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Стоимость") });
-
-                StackPanelVisibility();
-            }
-        }       
+            SetTableNameFromButton(sender);
+            _loader.LoadMaterials();
+            currentTable = "Материалы";
+            StackPanelVisibility();
+        }
 
         private void Button_Equipment_Click(object sender, RoutedEventArgs e)
         {
             DataGrid.ContextMenu = null;
+            SetTableNameFromButton(sender);
+            _loader.LoadEquipment();
+            currentTable = "Оборудование";
+            StackPanelVisibility();
+        }
+
+        private void Distribution_Of_Equipment_To_The_Site_Click(object sender, RoutedEventArgs e)
+        {
+            DataGrid.ContextMenu = null;
+            SetTableNameFromButton(sender);
 
             using (var context = new СтроительствоEntities())
             {
-                var EquipmentList = context.Оборудование.ToList();
+                var склады = context.Склады.ToList();
+                var объекты = context.Строительные_Объекты.ToList();
+                var оборудование = context.Оборудование.ToList();
 
-                DataGrid.ItemsSource = EquipmentList;
-                currentTable = "Оборудование";
+                var distributionList = context.Распределение_Оборудования_На_Объект
+                    .Include(r => r.Склады)
+                    .Include(r => r.Строительные_Объекты)
+                    .Include(r => r.Оборудование)
+                    .ToList();
+
+                DataGrid.ItemsSource = distributionList;
+                currentTable = "Распределение_Оборудования_На_Объект";
 
                 DataGrid.Columns.Clear();
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "ID", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Название", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Название") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Тип", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Тип") });
+
+                var textStyle = new Style(typeof(TextBlock));
+                textStyle.Setters.Add(new Setter(TextBlock.TextAlignmentProperty, TextAlignment.Center));
+                textStyle.Setters.Add(new Setter(TextBlock.PaddingProperty, new Thickness(5, 0, 5, 0)));
+
+                DataGrid.Columns.Add(new DataGridTextColumn
+                {
+                    Header = "ID",
+                    Binding = new Binding("id"),
+                    ElementStyle = textStyle,
+                    Width = new DataGridLength(0.4, DataGridLengthUnitType.Star),
+                });
+
+                DataGrid.Columns.Add(new DataGridComboBoxColumn
+                {
+                    Header = "Склад",
+                    ItemsSource = склады,
+                    SelectedValuePath = "id",
+                    DisplayMemberPath = "id",
+                    SelectedValueBinding = new Binding("id_Склада"),
+                    ElementStyle = new Style(typeof(ComboBox))
+                    {
+                        Setters = { new Setter(ComboBox.HorizontalContentAlignmentProperty, HorizontalAlignment.Center) }
+                    },
+                    Width = new DataGridLength(0.4, DataGridLengthUnitType.Star),
+                });
+
+                DataGrid.Columns.Add(new DataGridComboBoxColumn
+                {
+                    Header = "Объект",
+                    ItemsSource = объекты,
+                    SelectedValuePath = "id",
+                    DisplayMemberPath = "Название",
+                    SelectedValueBinding = new Binding("id_Объекта"),
+                    Width = new DataGridLength(1, DataGridLengthUnitType.Star),
+                });
+
+                DataGrid.Columns.Add(new DataGridComboBoxColumn
+                {
+                    Header = "Оборудование",
+                    ItemsSource = оборудование,
+                    SelectedValuePath = "id",
+                    DisplayMemberPath = "Название",
+                    SelectedValueBinding = new Binding("id_Оборудования"),
+                    Width = new DataGridLength(1, DataGridLengthUnitType.Star),
+                });
+
+                DataGrid.Columns.Add(new DataGridTextColumn
+                {
+                    Header = "Дата передачи",
+                    Binding = new Binding("Дата_Передачи") { StringFormat = "dd.MM.yyyy" },
+                    ElementStyle = textStyle,
+                    Width = new DataGridLength(1, DataGridLengthUnitType.Star),
+                });
+
+                // Создание стиля кнопки
+                var buttonStyle = new Style(typeof(Button));
+                buttonStyle.Setters.Add(new Setter(Button.BackgroundProperty, new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CD853F"))));
+                buttonStyle.Setters.Add(new Setter(Button.ForegroundProperty, Brushes.White));
+                buttonStyle.Setters.Add(new Setter(Button.FontWeightProperty, FontWeights.SemiBold));
+                buttonStyle.Setters.Add(new Setter(Button.PaddingProperty, new Thickness(10, 6, 10, 6)));
+                buttonStyle.Setters.Add(new Setter(Button.MarginProperty, new Thickness(4, 2, 4, 2)));
+                buttonStyle.Setters.Add(new Setter(Button.BorderThicknessProperty, new Thickness(0)));
+                buttonStyle.Setters.Add(new Setter(Button.CursorProperty, Cursors.Hand));
+                buttonStyle.Setters.Add(new Setter(Button.HorizontalAlignmentProperty, HorizontalAlignment.Stretch));
+                buttonStyle.Setters.Add(new Setter(Button.VerticalAlignmentProperty, VerticalAlignment.Stretch));
+
+                var template = new ControlTemplate(typeof(Button));
+                var borderFactory = new FrameworkElementFactory(typeof(Border));
+                borderFactory.SetValue(Border.CornerRadiusProperty, new CornerRadius(3));
+                borderFactory.SetBinding(Border.BackgroundProperty, new Binding("Background")
+                {
+                    RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent)
+                });
+
+                var contentFactory = new FrameworkElementFactory(typeof(ContentPresenter));
+                contentFactory.SetValue(ContentPresenter.HorizontalAlignmentProperty, HorizontalAlignment.Center);
+                contentFactory.SetValue(ContentPresenter.VerticalAlignmentProperty, VerticalAlignment.Center);
+
+                borderFactory.AppendChild(contentFactory);
+                template.VisualTree = borderFactory;
+                buttonStyle.Setters.Add(new Setter(Button.TemplateProperty, template));
+
+                var hoverTrigger = new Trigger
+                {
+                    Property = Button.IsMouseOverProperty,
+                    Value = true
+                };
+                hoverTrigger.Setters.Add(new Setter(Button.BackgroundProperty, new SolidColorBrush((Color)ColorConverter.ConvertFromString("#B87333"))));
+                buttonStyle.Triggers.Add(hoverTrigger);
+
+                // Кнопка 
+                var buttonTemplate = new DataTemplate();
+                var buttonFactory = new FrameworkElementFactory(typeof(Button));
+                buttonFactory.SetValue(Button.ContentProperty, "Отправить обратно на склад");
+                buttonFactory.AddHandler(Button.ClickEvent, new RoutedEventHandler(SendToStock_Click));
+                buttonFactory.SetValue(Button.StyleProperty, buttonStyle);
+
+                buttonTemplate.VisualTree = buttonFactory;
+
+                DataGridTemplateColumn buttonColumn = new DataGridTemplateColumn
+                {
+                    Header = "",
+                    Width = new DataGridLength(1, DataGridLengthUnitType.Star),
+                    CellTemplate = buttonTemplate
+                };
+
+                DataGrid.Columns.Add(buttonColumn);
 
                 StackPanelVisibility();
             }
         }
 
-        private void Button_Suppliers_Click(object sender, RoutedEventArgs e)
+        private void SendToStock_Click(object sender, RoutedEventArgs e)
         {
             using (var context = new СтроительствоEntities())
             {
-                DataGrid.ContextMenu = null;
+                int employeeId = Manager.User.Employee;
+                var сотрудник = context.Сотрудники
+                    .Where(emp => emp.id == employeeId)
+                    .Select(emp => new { emp.ФИО, emp.id_Отдела })
+                    .FirstOrDefault();
 
-                var SuppliersList = context.Поставщики.ToList();
+                string fio = сотрудник?.ФИО ?? "Неизвестный пользователь";
+                string отдел = сотрудник != null
+                    ? context.Отделы.Where(o => o.id == сотрудник.id_Отдела).Select(o => o.Название).FirstOrDefault() ?? "Неизвестный отдел"
+                    : "Неизвестный отдел";
 
-                DataGrid.ItemsSource = SuppliersList;
-                currentTable = "Поставщики";
+                var selectedDistribution = (Распределение_Оборудования_На_Объект)DataGrid.SelectedItem;
+                if (selectedDistribution == null)
+                {
+                    MessageBox.Show("Выберите оборудование для перенаправления обратно на склад.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
-                DataGrid.Columns.Clear();
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "ID", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Название", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Название") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Контактное лицо", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Контактное_Лицо") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Телефон", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Телефон") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Адрес", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Адрес") });
+                var оборудование = context.Оборудование.FirstOrDefault(o => o.id == selectedDistribution.id_Оборудования);
+                if (оборудование == null)
+                {
+                    MessageBox.Show("Оборудование не найдено в базе.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
-                StackPanelVisibility();
+                var склад = context.Склады.FirstOrDefault(s => s.id == selectedDistribution.id_Склада);
+                string номерСклада = склад != null ? склад.Номер_Склада.ToString() : "неизвестен";
+
+                var result = MessageBox.Show(
+                    $"Вы уверены, что хотите перенаправить оборудование \"{оборудование.Название}\" обратно на склад №{номерСклада}?",
+                    "Подтверждение",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+
+                var equipmentInStorage = context.Оборудование_На_Складах
+                    .FirstOrDefault(eq => eq.id_Оборудования == selectedDistribution.id_Оборудования
+                                         && eq.id_Склада == selectedDistribution.id_Склада);
+                var distributionToDelete = context.Распределение_Оборудования_На_Объект
+                    .FirstOrDefault(d => d.id == selectedDistribution.id);
+                var objectName = context.Строительные_Объекты
+                    .Where(o => o.id == selectedDistribution.id_Объекта)
+                    .Select(o => o.Название)
+                    .FirstOrDefault();
+
+                if (distributionToDelete != null)
+                {
+                    equipmentInStorage.Статус = "На складе";
+                    context.Распределение_Оборудования_На_Объект.Remove(distributionToDelete);
+                    context.SaveChanges();
+
+                    var newHistory = new История_Перемещений_Оборудования
+                    {
+                        id_Оборудования = оборудование.id,
+                        id_Склада = selectedDistribution.id_Склада,
+                        id_Объекта = selectedDistribution.id_Объекта,
+                        Дата_Перемещения_С_Объекта_На_Склад = distributionToDelete.Дата_Передачи,
+                        Описание = $"Оборудование \"{оборудование.Название}\" возвращено с объекта \"{objectName}\" на склад №{номерСклада} ({distributionToDelete.Дата_Передачи:dd.MM.yyyy HH:mm}), пользователем: {fio} ({отдел})"
+                    };
+                    context.История_Перемещений_Оборудования.Add(newHistory);
+
+                }
+                else
+                {
+                    MessageBox.Show("Оборудование на складе не найдено.");
+                }
+
+                context.SaveChanges();
+
+                MessageBox.Show($"Оборудование \"{оборудование.Название}\" успешно перенаправлено обратно на склад.",
+                    "Готово", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                Distribution_Of_Equipment_To_The_Site_Click(null, null);
             }
-        }                       
+        }
 
         private void ButtonMaterialMovements_Click(object sender, RoutedEventArgs e)
         {
             Manager.MainFrame.Navigate(new MaterialMovementsPage());
         }
 
+        private void Button_Application_Materials_At_Object_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new Application_Materials_At_ObjectPage());
+        }
+
         private void Button_Allocation_of_Materials_to_the_Object_Click(object sender, RoutedEventArgs e)
         {
             DataGrid.ContextMenu = null;
+            SetTableNameFromButton(sender);
 
             using (var context = new СтроительствоEntities())
             {
@@ -235,9 +409,15 @@ namespace MezhTransStroy.Roles
                 currentTable = "Распределение_Материалов_На_Объект";
 
                 DataGrid.Columns.Clear();
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "ID", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id") });
-
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "id объекта", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id_Объекта") });
+                DataGrid.Columns.Add(new DataGridTextColumn
+                {
+                    Header = "ID",
+                    Binding = new Binding("id"),
+                    ElementStyle = new Style(typeof(TextBlock))
+                    {
+                        Setters = { new Setter(TextBlock.TextAlignmentProperty, TextAlignment.Center) }
+                    }
+                });
 
                 DataGrid.Columns.Add(new DataGridComboBoxColumn
                 {
@@ -254,10 +434,12 @@ namespace MezhTransStroy.Roles
                     ItemsSource = склады,
                     SelectedValuePath = "id",
                     DisplayMemberPath = "id",
-                    SelectedValueBinding = new Binding("id_Склада")
+                    SelectedValueBinding = new Binding("id_Склада"),
+                    ElementStyle = new Style(typeof(ComboBox))
+                    {
+                        Setters = { new Setter(ComboBox.HorizontalContentAlignmentProperty, HorizontalAlignment.Center) }
+                    }
                 });
-
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "id материала", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id_Материала") });
 
                 DataGrid.Columns.Add(new DataGridComboBoxColumn
                 {
@@ -268,9 +450,51 @@ namespace MezhTransStroy.Roles
                     SelectedValueBinding = new Binding("id_Материала")
                 });
 
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Количество", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Количество") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость материалов", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Стоимость_Материалов") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Дата передачи", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Дата_Передачи") { StringFormat = "dd.MM.yyyy" } });
+                DataGrid.Columns.Add(new DataGridTextColumn
+                {
+                    Header = "Количество",
+                    Binding = new Binding("Количество"),
+                    ElementStyle = new Style(typeof(TextBlock))
+                    {
+                        Setters = { new Setter(TextBlock.TextAlignmentProperty, TextAlignment.Center) }
+                    }
+                });
+                DataGrid.Columns.Add(new DataGridTextColumn
+                {
+                    Header = "Стоимость материалов",
+                    Binding = new Binding("Стоимость_Материалов") { StringFormat = "{0:N2} ₽" },
+                    IsReadOnly = true,
+                    ElementStyle = new Style(typeof(TextBlock))
+                    {
+                        Setters = { new Setter(TextBlock.TextAlignmentProperty, TextAlignment.Center) }
+                    }
+                });
+                DataGrid.Columns.Add(new DataGridTextColumn
+                {
+                    Header = "Дата передачи",
+                    Binding = new Binding("Дата_Передачи") { StringFormat = "dd.MM.yyyy" },
+                    ElementStyle = new Style(typeof(TextBlock))
+                    {
+                        Setters = { new Setter(TextBlock.TextAlignmentProperty, TextAlignment.Center) }
+                    }
+                });
+                DataGrid.Columns.Add(new DataGridTextColumn
+                {
+                    Header = "Израсходовано",
+                    Binding = new Binding("Израсходовано"),
+                    IsReadOnly = true,
+                    ElementStyle = new Style(typeof(TextBlock))
+                    {
+                        Setters = { new Setter(TextBlock.TextAlignmentProperty, TextAlignment.Center) }
+                    }
+                });
+
+                foreach (var column in DataGrid.Columns)
+                {
+                    column.Width = DataGridLength.Auto;
+                }
+                if (DataGrid.Columns.Count > 0)
+                    DataGrid.Columns.Last().Width = new DataGridLength(1, DataGridLengthUnitType.Star);
 
                 StackPanelVisibility();
             }
@@ -279,158 +503,31 @@ namespace MezhTransStroy.Roles
         private void Button_Work_On_Object_Click(object sender, RoutedEventArgs e)
         {
             DataGrid.ContextMenu = null;
-
-            using (var context = new СтроительствоEntities())
-            {
-                var объект = context.Строительные_Объекты.ToList();
-                var сотрудник = context.Сотрудники.ToList();
-                var статусы = new List<string> { "Не начат", "В работе", "Завершён", "Отложен", "Отменён" };
-
-
-                var Work_On_ObjectList = context.Работа_На_Объекте
-                .Include(emp => emp.Сотрудники)
-                .Include(emp => emp.Строительные_Объекты)
-                .ToList();
-
-                DataGrid.ItemsSource = Work_On_ObjectList;
-                currentTable = "Работа_На_Объекте";
-
-                DataGrid.Columns.Clear();
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "ID", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "id объекта", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id_Объекта") });
-
-                DataGrid.Columns.Add(new DataGridComboBoxColumn
-                {
-                    Header = "Объект",
-                    ItemsSource = объект,
-                    SelectedValuePath = "id",
-                    DisplayMemberPath = "Название",
-                    SelectedValueBinding = new Binding("id_Объекта")
-                });
-
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "id сотрудника", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id_Сотрудника") });
-                DataGrid.Columns.Add(new DataGridComboBoxColumn
-                {
-                    Header = "Сотрудник",
-                    ItemsSource = сотрудник,
-                    SelectedValuePath = "id",
-                    DisplayMemberPath = "ФИО",
-                    SelectedValueBinding = new Binding("id_Сотрудника")
-                });
-
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Дата назначения", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Дата_Назначения") { StringFormat = "dd.MM.yyyy" } });
-
-                DataGrid.Columns.Add(new DataGridComboBoxColumn
-                {
-                    Header = "Статус",
-                    ItemsSource = статусы,
-                    SelectedItemBinding = new Binding("Статус"),
-                    Width = new DataGridLength(1, DataGridLengthUnitType.Star)
-                });
-
-                StackPanelVisibility();
-            }
+            SetTableNameFromButton(sender);
+            _loader.LoadWork_On_Object();
+            currentTable = "Работа_На_Объекте";
+            StackPanelVisibility();
         }
 
         private void Button_Equipment_Сosts_Click(object sender, RoutedEventArgs e)
         {
             DataGrid.ContextMenu = null;
-
-            using (var context = new СтроительствоEntities())
-            {
-                var объект = context.Строительные_Объекты.ToList();
-                var оборудование = context.Оборудование.ToList();
-
-                var Equipment_СostsList = context.Затраты_На_Оборудование
-                .Include(emp => emp.Оборудование)
-                .Include(emp => emp.Строительные_Объекты)
-                .ToList();
-
-                DataGrid.ItemsSource = Equipment_СostsList;
-                currentTable = "Затраты_На_Оборудование";
-
-                DataGrid.Columns.Clear();
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "ID", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "id объекта", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id_Объекта") });
-                DataGrid.Columns.Add(new DataGridComboBoxColumn
-                {
-                    Header = "Объект",
-                    ItemsSource = объект,
-                    SelectedValuePath = "id",
-                    DisplayMemberPath = "Название",
-                    SelectedValueBinding = new Binding("id_Объекта")
-                });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "id оборудования", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id_Оборудования") });
-
-                DataGrid.Columns.Add(new DataGridComboBoxColumn
-                {
-                    Header = "Оборудование",
-                    ItemsSource = оборудование,
-                    SelectedValuePath = "id",
-                    DisplayMemberPath = "Название",
-                    SelectedValueBinding = new Binding("id_Оборудования")
-                });
-
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Часы работы", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Часы_Работы") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Стоимость в час", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Стоимость_в_Час") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Затраты") });
-                StackPanelVisibility();
-            }
+            SetTableNameFromButton(sender);
+            _loader.LoadEquipment_Сosts();
+            currentTable = "Затраты_На_Оборудование";
+            StackPanelVisibility();
         }
 
-        private void Button_Salary_Wage_Employees_Click(object sender, RoutedEventArgs e)
-        {
-            DataGrid.ContextMenu = null;
-
-            using (var context = new СтроительствоEntities())
-            {
-                var сотрудники = context.Сотрудники.ToList();
-
-                var Salary_WageList = context.Заработная_Плата_Сотрудников
-                .Include(emp => emp.Сотрудники)
-                .ToList();
-
-                DataGrid.ItemsSource = Salary_WageList;
-                currentTable = "Заработная_Плата_Сотрудников";
-
-                DataGrid.Columns.Clear();
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "ID", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "id сотрудника", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("id_Сотрудника") });
-                DataGrid.Columns.Add(new DataGridComboBoxColumn
-                {
-                    Header = "Сотрудник",
-                    ItemsSource = сотрудники,
-                    SelectedValuePath = "id",
-                    DisplayMemberPath = "ФИО",
-                    SelectedValueBinding = new Binding("id_Сотрудника"),
-                    Width = new DataGridLength(1, DataGridLengthUnitType.Star)
-                });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Ставка в день", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Ставка_в_День") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Отработано дней", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Отработано_Дней") });
-                DataGrid.Columns.Add(new DataGridTextColumn { Header = "Затраты", Width = new DataGridLength(1, DataGridLengthUnitType.Star), Binding = new Binding("Затраты") });
-
-                StackPanelVisibility();
-            }
-        }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
             using (var context = new СтроительствоEntities())
             {
                 switch (currentTable)
-                {                   
-                    case "Сотрудники":
-                        var newEmployees = new Сотрудники
-                        {
-                            ФИО = "",
-                            Должность = "",
-                            Квалификация = "",
-                            Дата_Приёма = DateTime.Now.Date,
-                            Контакты = "",
-                            id_Отдела = 1
-                        };
-                        context.Сотрудники.Add(newEmployees);
-                        break;
+                {
+                    case "Отделы":
+                        MessageBox.Show("Невозможно добавить новый отдел", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
 
                     case "Строительные_Объекты":
                         var newConstruction_Objects = new Строительные_Объекты
@@ -458,22 +555,25 @@ namespace MezhTransStroy.Roles
                         var newEquipment = new Оборудование
                         {
                             Название = "",
-                            Тип = ""
+                            Тип = "",
+                            Год_Выпуска = 0,
+                            Производитель = "",
+                            Стоимость_в_Час = 0m
                         };
                         context.Оборудование.Add(newEquipment);
                         break;
 
-                    case "Поставщики":
-                        var newSuppliers = new Поставщики
+                    case "Распределение_Оборудования_На_Объект_Click":
+                        var newDistribution_Of_Equipment_To_The_Site = new Распределение_Оборудования_На_Объект
                         {
-                            Название = "",
-                            Контактное_Лицо = "",
-                            Телефон = "",
-                            Адрес = ""
+                            id_Склада = 1,
+                            id_Объекта = 1,
+                            id_Оборудования = 1,
+                            Дата_Передачи = DateTime.Now.Date
                         };
-                        context.Поставщики.Add(newSuppliers);
-                        break;                   
-                                    
+                        context.Распределение_Оборудования_На_Объект.Add(newDistribution_Of_Equipment_To_The_Site);
+                        break;
+
                     case "Распределение_Материалов_На_Объект":
                         var newAllocation_of_Materials_to_the_Object = new Распределение_Материалов_На_Объект
                         {
@@ -482,7 +582,8 @@ namespace MezhTransStroy.Roles
                             id_Материала = 1,
                             Количество = 0,
                             Стоимость_Материалов = 0,
-                            Дата_Передачи = DateTime.Now.Date
+                            Дата_Передачи = DateTime.Now.Date,
+                            Израсходовано = 0
                         };
                         context.Распределение_Материалов_На_Объект.Add(newAllocation_of_Materials_to_the_Object);
                         break;
@@ -504,20 +605,11 @@ namespace MezhTransStroy.Roles
                             id_Объекта = 1,
                             id_Оборудования = 1,
                             Часы_Работы = 0,
-                            Стоимость_в_Час = 0
+                            Затраты = 0m
                         };
                         context.Затраты_На_Оборудование.Add(newEquipment_Сosts);
                         break;
 
-                    case "Заработная_Плата_Сотрудников":
-                        var newSalary_Wage = new Заработная_Плата_Сотрудников
-                        {
-                            id_Сотрудника = 1,
-                            Ставка_в_День = 0,
-                            Отработано_Дней = 0
-                        };
-                        context.Заработная_Плата_Сотрудников.Add(newSalary_Wage);
-                        break;
                     default:
                         MessageBox.Show("Неизвестная таблица для добавления");
                         return;
@@ -531,25 +623,25 @@ namespace MezhTransStroy.Roles
         private void ButtonEdit_Click(object sender, RoutedEventArgs e)
         {
             using (var context = new СтроительствоEntities())
-            {               
-                if (currentTable == "Сотрудники")
+            {
+                if (currentTable == "Отделы")
                 {
-                    var EmployeesFromGrid = DataGrid.ItemsSource as List<Сотрудники>;
+                    var SectionsFromGrid = DataGrid.ItemsSource as List<Отделы>;
 
-                    if (EmployeesFromGrid != null)
+                    if (SectionsFromGrid != null)
                     {
-                        foreach (var Employees in EmployeesFromGrid)
+                        foreach (var Sections in SectionsFromGrid)
                         {
-                            if (Employees.id == 0)
+                            if (Sections.id == 0)
                             {
-                                context.Сотрудники.Add(Employees);
+                                context.Отделы.Add(Sections);
                             }
                             else
                             {
-                                var existingEmployees = context.Сотрудники.Find(Employees.id);
-                                if (existingEmployees != null)
+                                var existingSections = context.Отделы.Find(Sections.id);
+                                if (existingSections != null)
                                 {
-                                    context.Entry(existingEmployees).CurrentValues.SetValues(Employees);
+                                    context.Entry(existingSections).CurrentValues.SetValues(Sections);
                                 }
                             }
                         }
@@ -607,7 +699,6 @@ namespace MezhTransStroy.Roles
                         context.SaveChanges();
                     }
                 }
-
                 else if (currentTable == "Оборудование")
                 {
                     var EquipmentFromGrid = DataGrid.ItemsSource as List<Оборудование>;
@@ -616,6 +707,12 @@ namespace MezhTransStroy.Roles
                     {
                         foreach (var Equipment in EquipmentFromGrid)
                         {
+                            if (Equipment.Год_Выпуска < 1800)
+                            {
+                                MessageBox.Show($"Ошибка: у оборудования с ID {Equipment.id} указан недопустимый год выпуска ({Equipment.Год_Выпуска})!");
+                                return;
+                            }
+
                             if (Equipment.id == 0)
                             {
                                 context.Оборудование.Add(Equipment);
@@ -633,32 +730,31 @@ namespace MezhTransStroy.Roles
                         context.SaveChanges();
                     }
                 }
-
-                else if (currentTable == "Поставщики")
+                else if (currentTable == "Распределение_Оборудования_На_Объект")
                 {
-                    var SuppliersFromGrid = DataGrid.ItemsSource as List<Поставщики>;
+                    var DistributionFromGrid = DataGrid.ItemsSource as List<Распределение_Оборудования_На_Объект>;
 
-                    if (SuppliersFromGrid != null)
+                    if (DistributionFromGrid != null)
                     {
-                        foreach (var Suppliers in SuppliersFromGrid)
+                        foreach (var Distribution in DistributionFromGrid)
                         {
-                            if (Suppliers.id == 0)
+                            if (Distribution.id == 0)
                             {
-                                context.Поставщики.Add(Suppliers);
+                                context.Распределение_Оборудования_На_Объект.Add(Distribution);
                             }
                             else
                             {
-                                var existingSuppliers = context.Поставщики.Find(Suppliers.id);
-                                if (existingSuppliers != null)
+                                var existingDistribution = context.Распределение_Оборудования_На_Объект.Find(Distribution.id);
+                                if (existingDistribution != null)
                                 {
-                                    context.Entry(existingSuppliers).CurrentValues.SetValues(Suppliers);
+                                    context.Entry(existingDistribution).CurrentValues.SetValues(Distribution);
                                 }
                             }
                         }
 
                         context.SaveChanges();
                     }
-                }                               
+                }
                 else if (currentTable == "Распределение_Материалов_На_Объект")
                 {
                     var Allocation_of_Materials_to_the_ObjectFromGrid = DataGrid.ItemsSource as List<Распределение_Материалов_На_Объект>;
@@ -732,31 +828,6 @@ namespace MezhTransStroy.Roles
                         context.SaveChanges();
                     }
                 }
-
-                else if (currentTable == "Заработная_Плата_Сотрудников")
-                {
-                    var Salary_WageFromGrid = DataGrid.ItemsSource as List<Заработная_Плата_Сотрудников>;
-
-                    if (Salary_WageFromGrid != null)
-                    {
-                        foreach (var Salary_Wage in Salary_WageFromGrid)
-                        {
-                            if (Salary_Wage.id == 0)
-                            {
-                                context.Заработная_Плата_Сотрудников.Add(Salary_Wage);
-                            }
-                            else
-                            {
-                                var existingSalary_Wage = context.Заработная_Плата_Сотрудников.Find(Salary_Wage.id);
-                                if (existingSalary_Wage != null)
-                                {
-                                    context.Entry(existingSalary_Wage).CurrentValues.SetValues(Salary_Wage);
-                                }
-                            }
-                        }
-                        context.SaveChanges();
-                    }
-                }
             }
         }
 
@@ -766,7 +837,7 @@ namespace MezhTransStroy.Roles
 
             if (string.IsNullOrEmpty(inputID))
             {
-                MessageBox.Show("Введите ID удаляемого элемента:");
+                MessageBox.Show("Введите ID удаляемого элемента в поле ID:");
                 return;
             }
 
@@ -784,10 +855,10 @@ namespace MezhTransStroy.Roles
                 dynamic itemToDelete = null;
 
                 switch (currentTable)
-                {                  
-                    case "Сотрудники":
-                        itemToDelete = context.Сотрудники.FirstOrDefault(i => i.id == deleteID);
-                        break;
+                {
+                    case "Отделы":
+                        MessageBox.Show("Невозможно удалить отдел", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
 
                     case "Строительные_Объекты":
                         itemToDelete = context.Строительные_Объекты.FirstOrDefault(s => s.id == deleteID);
@@ -801,9 +872,9 @@ namespace MezhTransStroy.Roles
                         itemToDelete = context.Оборудование.FirstOrDefault(eq => eq.id == deleteID);
                         break;
 
-                    case "Поставщики":
-                        itemToDelete = context.Поставщики.FirstOrDefault(op => op.id == deleteID);
-                        break;                  
+                    case "Распределение_Оборудования_На_Объект":
+                        itemToDelete = context.Распределение_Оборудования_На_Объект.FirstOrDefault(eq => eq.id == deleteID);
+                        break;
 
                     case "Распределение_Материалов_На_Объект":
                         itemToDelete = context.Распределение_Материалов_На_Объект.FirstOrDefault(si => si.id == deleteID);
@@ -817,9 +888,6 @@ namespace MezhTransStroy.Roles
                         itemToDelete = context.Затраты_На_Оборудование.FirstOrDefault(equip => equip.id == deleteID);
                         break;
 
-                    case "Заработная_Плата_Сотрудников":
-                        itemToDelete = context.Заработная_Плата_Сотрудников.FirstOrDefault(sw => sw.id == deleteID);
-                        break;
                     default:
                         MessageBox.Show("Неизвестная таблица.");
                         return;
@@ -833,19 +901,32 @@ namespace MezhTransStroy.Roles
 
                 context.Set(itemToDelete.GetType()).Remove(itemToDelete);
 
-                context.SaveChanges();
-
-                MessageBox.Show($"Запись с ID {deleteID} была успешно удалена.");
-                RefreshDataGrid();
+                try
+                {
+                    context.SaveChanges();
+                    MessageBox.Show($"Запись с ID {deleteID} была успешно удалена.");
+                    RefreshDataGrid();
+                }
+                catch (DbUpdateException ex)
+                {
+                    if (ex.InnerException?.InnerException is SqlException sqlEx && sqlEx.Number == 547)
+                    {
+                        MessageBox.Show("Невозможно удалить запись. Она используется в других таблицах!", "Ошибка удаления", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
             }
         }
 
         private void RefreshDataGrid()
         {
             switch (currentTable)
-            {              
-                case "Сотрудники":
-                    Button_Employees_Click(null, null);
+            {
+                case "Отделы":
+                    Button_Sections_Click(null, null);
                     break;
                 case "Строительные_Объекты":
                     Button_Construction_Objects_Click(null, null);
@@ -856,9 +937,9 @@ namespace MezhTransStroy.Roles
                 case "Оборудование":
                     Button_Equipment_Click(null, null);
                     break;
-                case "Поставщики":
-                    Button_Suppliers_Click(null, null);
-                    break;               
+                case "Распределение_Оборудования_На_Объект":
+                    Distribution_Of_Equipment_To_The_Site_Click(null, null);
+                    break;
                 case "Распределение_Материалов_На_Объект":
                     Button_Allocation_of_Materials_to_the_Object_Click(null, null);
                     break;
@@ -867,9 +948,6 @@ namespace MezhTransStroy.Roles
                     break;
                 case "Затраты_На_Оборудование":
                     Button_Equipment_Сosts_Click(null, null);
-                    break;
-                case "Заработная_Плата_Сотрудников":
-                    Button_Salary_Wage_Employees_Click(null, null);
                     break;
                 default:
                     break;
@@ -894,10 +972,10 @@ namespace MezhTransStroy.Roles
                 {
                     bool matchesId = true;
                     if (!string.IsNullOrWhiteSpace(idFilter) && int.TryParse(idFilter, out int id))
-                    {                     
-                        if (item is Сотрудники сотрудники)
+                    {
+                        if (item is Отделы отделы)
                         {
-                            matchesId = сотрудники.id == id;
+                            matchesId = отделы.id == id;
                         }
                         else if (item is Строительные_Объекты cтроительные_Объекты)
                         {
@@ -911,10 +989,10 @@ namespace MezhTransStroy.Roles
                         {
                             matchesId = оборудование.id == id;
                         }
-                        else if (item is Поставщики поставщики)
+                        else if (item is Распределение_Оборудования_На_Объект распределение_Оборудования_На_Объект)
                         {
-                            matchesId = поставщики.id == id;
-                        }                     
+                            matchesId = распределение_Оборудования_На_Объект.id == id;
+                        }
                         else if (item is Распределение_Материалов_На_Объект распределение_Материалов_На_Объект)
                         {
                             matchesId = распределение_Материалов_На_Объект.id_Объекта == id;
@@ -927,10 +1005,6 @@ namespace MezhTransStroy.Roles
                         {
                             matchesId = затраты_На_Оборудование.id_Объекта == id;
                         }
-                        else if (item is Заработная_Плата_Сотрудников заработная_Плата_Сотрудников)
-                        {
-                            matchesId = заработная_Плата_Сотрудников.id_Сотрудника == id;
-                        }
                     }
 
                     bool matchesName = true;
@@ -938,24 +1012,10 @@ namespace MezhTransStroy.Roles
                     {
                         matchesName = false;
 
-                        // Фильтрация по имени для связей в таблицах                      
-                        if (item is Сотрудники сотрудники)
+                        // Фильтрация по имени для связей в таблицах
+                        if (item is Отделы отдел)
                         {
-                            bool matchessection = true;
-                            if (сотрудники.Отделы != null && сотрудники.Отделы.Название != null)
-                            {
-                                matchessection = сотрудники.Отделы.Название.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0;
-                            }
-
-                            bool matchesemp = true;
-                            if (item is Сотрудники сотр)
-                            {
-                                matchesemp = сотрудники.Должность.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                                          сотрудники.Квалификация.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                                          сотрудники.ФИО.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0;
-                            }
-
-                            matchesName = matchessection || matchesemp;
+                            matchesName = отдел.Название.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0;
                         }
                         else if (item is Строительные_Объекты строительные_Объекты)
                         {
@@ -968,14 +1028,26 @@ namespace MezhTransStroy.Roles
                         }
                         else if (item is Оборудование оборудование)
                         {
-                            matchesName = оборудование.Название.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0;
+                            matchesName = оборудование.Название.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                          оборудование.Тип.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                          оборудование.Производитель.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0;
                         }
-                        else if (item is Поставщики поставщики)
+                        else if (item is Распределение_Оборудования_На_Объект распределение_Оборудования_На_Объект)
                         {
-                            matchesName = поставщики.Название.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                                          поставщики.Контактное_Лицо.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                                          поставщики.Телефон.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0;
-                        }                                             
+                            bool matchesobjects = true;
+                            if (распределение_Оборудования_На_Объект.Строительные_Объекты != null && распределение_Оборудования_На_Объект.Строительные_Объекты.Название != null)
+                            {
+                                matchesobjects = распределение_Оборудования_На_Объект.Строительные_Объекты.Название.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0;
+                            }
+
+                            bool matchesequipment = true;
+                            if (распределение_Оборудования_На_Объект.Оборудование != null && распределение_Оборудования_На_Объект.Оборудование.Название != null)
+                            {
+                                matchesobjects = распределение_Оборудования_На_Объект.Оборудование.Название.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0;
+                            }
+
+                            matchesName = matchesobjects || matchesequipment;
+                        }
                         else if (item is Распределение_Материалов_На_Объект распределение_Материалов_На_Объект)
                         {
                             bool matchesmaterial = true;
@@ -1024,20 +1096,10 @@ namespace MezhTransStroy.Roles
 
                             matchesName = matchesobjects || matchesEquipment;
                         }
-                        else if (item is Заработная_Плата_Сотрудников заработная_Плата_Сотрудников)
-                        {
-                            bool matchesEmployees = true;
-                            if (заработная_Плата_Сотрудников.Сотрудники != null && заработная_Плата_Сотрудников.Сотрудники.ФИО != null)
-                            {
-                                matchesEmployees = заработная_Плата_Сотрудников.Сотрудники.ФИО.IndexOf(nameFilter, StringComparison.OrdinalIgnoreCase) >= 0;
-                            }
-
-                            matchesName = matchesEmployees;
-                        }
                         // Фильтрация по обычным строковым свойствам
                         if (!matchesName)
                         {
-                            var nameProperties = new[] { "ФИО", "Название"};
+                            var nameProperties = new[] { "ФИО", "Название" };
                             matchesName = nameProperties.Any(propName =>
                             {
                                 var property = item.GetType().GetProperty(propName);
@@ -1081,6 +1143,6 @@ namespace MezhTransStroy.Roles
         private void ButtonUpdate_Click(object sender, RoutedEventArgs e)
         {
             RefreshDataGrid();
-        }     
+        }
     }
 }

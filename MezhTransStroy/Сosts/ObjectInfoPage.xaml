@@ -1,0 +1,141 @@
+﻿<Page x:Class="MezhTransStroy.ObjectInfoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MezhTransStroy"
+      mc:Ignorable="d" 
+     d:DesignHeight="1000" d:DesignWidth="1500"
+      Title="ObjectInfoPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
+            <Button Content="Отчёты по затратам" Width="152" Height="38" Margin="45,0"
+            FontFamily="Yu Gothic UI Semibold" FontSize="14" Background="SandyBrown"
+            Click="ButtonCosts_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="5,0">
+                <TextBlock Text="Выберите строительный объект:" 
+                   FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,3" Height="20"/>
+                <ComboBox x:Name="cmbObjects" Width="201" Height="28"
+                  DisplayMemberPath="Название" SelectionChanged="cmbObjects_SelectionChanged"
+                  FontFamily="Yu Gothic UI Semibold" FontSize="12">
+                    <ComboBox.ItemContainerStyle>
+                        <Style TargetType="ComboBoxItem">
+                            <Setter Property="Background" Value="#FFF5DEB3"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Padding" Value="4,2"/>
+                        </Style>
+                    </ComboBox.ItemContainerStyle>
+                </ComboBox>
+            </StackPanel>
+
+            <Button Content="Экспорт в Excel" Width="145" Height="38"  Margin="45,0"
+            FontFamily="Yu Gothic UI Semibold" FontSize="14" Background="LightGreen"
+            Click="BtnExport_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
+
+        <Grid Grid.Row="1" Margin="20,20,20,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="250"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Background="White" CornerRadius="15" BorderBrush="#4CAF50" BorderThickness="1" Padding="20"
+        HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="0" Margin="53,0,0,68" Width="370" Height="182">
+                <Grid>
+                    <Image Source="/Images/кнопка1.png" HorizontalAlignment="Right" VerticalAlignment="Top" Height="68" Width="134" Margin="0,-42,-75,0"/>
+
+                    <StackPanel Orientation="Vertical" Margin="0,-11,0,-14">
+                        <TextBlock FontSize="18" FontWeight="Bold" Text="Информация об объекте:"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,20,0,20">
+                            <TextBlock Text="Дата начала:" FontWeight="Bold" Width="150" FontSize="15"/>
+                            <TextBlock x:Name="txtStartDate" FontSize="14"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                            <TextBlock Text="Дата окончания:" FontWeight="Bold" Width="150" FontSize="15"/>
+                            <TextBlock x:Name="txtEndDate" FontSize="14"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Статус:" FontWeight="Bold" Width="150" FontSize="15"/>
+                            <TextBlock x:Name="txtStatus" FontSize="14"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Background="White" CornerRadius="15" BorderBrush="#4CAF50" BorderThickness="1" Padding="20"
+        HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1" Height="240" Width="620" Margin="20,-13,0,0">
+                <Grid>
+                    <Image HorizontalAlignment="Right" VerticalAlignment="Top" Height="68" Width="134" Margin="0,-62,-78,0" Source="/Images/кнопка1.png"/>
+
+                    <StackPanel Orientation="Vertical" Margin="0,-12,-11,-23">
+                        <TextBlock FontSize="18" FontWeight="Bold" Text="Материалы на объекте:" Margin="0,0,0,10" HorizontalAlignment="Center"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" MaxHeight="200">
+                            <ItemsControl Name="MaterialsList"/>
+                        </ScrollViewer>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Background="White" CornerRadius="15" BorderBrush="#4CAF50" BorderThickness="1" Padding="20"
+        HorizontalAlignment="Center" VerticalAlignment="Top" Margin="-53,0,0,0" Height="196" Width="500" Grid.Row="1">
+                <Grid>
+                    <Image Source="/Images/кнопка1.png" HorizontalAlignment="Right" VerticalAlignment="Top" Height="68" Width="134" Margin="0,-62,-78,0"/>
+
+                    <StackPanel Orientation="Vertical" Margin="0,-9,-11,-8">
+                        <TextBlock FontSize="18" FontWeight="Bold" Text="Затраты на оборудование:" Margin="-70,0,0,10" HorizontalAlignment="Center"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" MaxHeight="200">
+                            <ItemsControl Name="EquipmentCostsList"/>
+                        </ScrollViewer>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Background="White" CornerRadius="15" BorderBrush="#4CAF50" BorderThickness="1" Padding="20"
+        HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" Margin="20,0,0,0" Width="620" Height="196">
+                <Grid>
+                    <Image Source="/Сosts/кнопка1.png" HorizontalAlignment="Right" VerticalAlignment="Top" Height="68" Width="134" Margin="0,-62,-78,0"/>
+
+                    <StackPanel Orientation="Vertical" Margin="0,-9,0,-10">
+                        <TextBlock FontSize="18" FontWeight="Bold" Text="Затраты на сотрудников:" Margin="0,0,0,10" HorizontalAlignment="Center"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" MaxHeight="200">
+                            <ItemsControl Name="EmployeeCostsList"/>
+                        </ScrollViewer>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+        <TextBlock x:Name="txtProfit"
+     Grid.Row="2"
+     Text="Прибыль:"
+     FontSize="25"
+     FontWeight="Bold"
+     HorizontalAlignment="Center"
+     Margin="0,30,0,28"
+     Visibility="Collapsed"/>
+    </Grid>
+</Page>

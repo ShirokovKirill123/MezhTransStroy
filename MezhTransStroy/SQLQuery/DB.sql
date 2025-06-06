@@ -3,7 +3,8 @@ USE Строительство;
 
 CREATE TABLE Отделы (
     id INT PRIMARY KEY IDENTITY,
-    Название NVARCHAR(100) NOT NULL
+    Название NVARCHAR(100) NOT NULL,
+    Телефон NVARCHAR(50)
 );
 
 CREATE TABLE Сотрудники (
@@ -36,7 +37,10 @@ CREATE TABLE Материалы (
 CREATE TABLE Оборудование (
     id INT PRIMARY KEY IDENTITY,
     Название NVARCHAR(100),
-    Тип NVARCHAR(50) NULL
+    Тип NVARCHAR(50) NULL,
+	Год_Выпуска INT,
+    Производитель NVARCHAR(100),
+    Стоимость_в_Час DECIMAL(10,2)
 );
 
 CREATE TABLE Поставщики (
@@ -49,7 +53,9 @@ CREATE TABLE Поставщики (
 
 CREATE TABLE Склады (
     id INT PRIMARY KEY IDENTITY,
-    Номер_Склада INT UNIQUE
+    Номер_Склада INT UNIQUE,
+	Адрес NVARCHAR(255),
+    Телефон NVARCHAR(50)
 );
 
 CREATE TABLE Материалы_На_Складах (
@@ -65,6 +71,26 @@ CREATE TABLE Материалы_На_Складах (
     FOREIGN KEY (id_Поставщика) REFERENCES Поставщики(id)
 );
 
+CREATE TABLE Оборудование_На_Складах (
+    id INT PRIMARY KEY IDENTITY,
+    id_Склада INT,
+    id_Оборудования INT,
+	Статус NVARCHAR(50) DEFAULT 'На складе', --"На складе", "На объекте"
+    FOREIGN KEY (id_Склада) REFERENCES Склады(id),
+    FOREIGN KEY (id_Оборудования) REFERENCES Оборудование(id)
+);
+
+CREATE TABLE Распределение_Оборудования_На_Объект (
+    id INT PRIMARY KEY IDENTITY,
+    id_Склада INT,
+    id_Объекта INT,
+    id_Оборудования INT,
+    Дата_Передачи DATE DEFAULT GETDATE(),
+    FOREIGN KEY (id_Склада) REFERENCES Склады(id),
+    FOREIGN KEY (id_Объекта) REFERENCES Строительные_Объекты(id),
+    FOREIGN KEY (id_Оборудования) REFERENCES Оборудование(id)
+);
+
 CREATE TABLE Заявки (
     id INT PRIMARY KEY IDENTITY,
     id_Объекта INT,
@@ -73,7 +99,7 @@ CREATE TABLE Заявки (
     id_Материала INT,
     Количество_Материала INT,
     Стоимость_Материалов DECIMAL(15,2),
-    Статус NVARCHAR(50) DEFAULT 'Ожидает обработки', --Обработано, --Уже на объекте
+    Статус NVARCHAR(50) DEFAULT 'Ожидает обработки', --"Ожидает обработки", "Обработано", "На складе", "На объекте", "Частично на объекте"
 	Дата_Заявки DATE DEFAULT GETDATE(),
     FOREIGN KEY (id_Объекта) REFERENCES Строительные_Объекты(id),
     FOREIGN KEY (id_Склада) REFERENCES Склады(id),
@@ -82,13 +108,16 @@ CREATE TABLE Заявки (
 );
 
 CREATE TABLE Распределение_Материалов_На_Объект (
-    id INT PRIMARY KEY IDENTITY,
+    id INT PRIMARY KEY IDENTITY,	
 	id_Склада INT,
     id_Объекта INT,
     id_Материала INT,
     Количество INT,
 	Стоимость_Материалов DECIMAL(15,2),
     Дата_Передачи DATE,
+	Израсходовано INT DEFAULT 0,
+	id_Заявки INT, 
+	FOREIGN KEY (id_Заявки) REFERENCES Заявки(id),
     FOREIGN KEY (id_Объекта) REFERENCES Строительные_Объекты(id),
 	FOREIGN KEY (id_Склада) REFERENCES Склады(id),
     FOREIGN KEY (id_Материала) REFERENCES Материалы(id)
@@ -109,8 +138,7 @@ CREATE TABLE Затраты_На_Оборудование (
     id_Объекта INT,
     id_Оборудования INT,
     Часы_Работы INT,
-    Стоимость_в_Час DECIMAL(10,2),
-    Затраты AS (Часы_Работы * Стоимость_в_Час) PERSISTED,
+	Затраты DECIMAL(15,2),
     FOREIGN KEY (id_Объекта) REFERENCES Строительные_Объекты(id),
     FOREIGN KEY (id_Оборудования) REFERENCES Оборудование(id)
 );
@@ -129,18 +157,20 @@ CREATE TABLE Пользователи
   id INT PRIMARY KEY IDENTITY,
   Логин VARCHAR(255),
   Пароль VARCHAR(255),
-  Уровень_Доступа VARCHAR(50)
+  Уровень_Доступа VARCHAR(50),
+  id_Сотрудника INT,
+  FOREIGN KEY (id_Сотрудника) REFERENCES Сотрудники(id)
 );
 
--- Таблица для уведомлений
 CREATE TABLE Уведомления (
     id INT PRIMARY KEY IDENTITY,
     Текст NVARCHAR(MAX) NOT NULL,
-    Дата_Создания DATETIME DEFAULT GETDATE()
-);
+    Дата_Создания DATETIME DEFAULT GETDATE(),
+    id_Заявки INT, 
+	FOREIGN KEY (id_Заявки) REFERENCES Заявки(id)
+);	
 
--- Таблица для истории перемещений материалов
-CREATE TABLE История_Перемещений (
+CREATE TABLE История_Перемещений_Материалов (
     id INT PRIMARY KEY IDENTITY,
 	id_Заявки INT,
     id_Склада INT,
@@ -153,4 +183,17 @@ CREATE TABLE История_Перемещений (
     FOREIGN KEY (id_Объекта) REFERENCES Строительные_Объекты(id),
     FOREIGN KEY (id_Материала) REFERENCES Материалы(id),
 	FOREIGN KEY (id_Заявки) REFERENCES Заявки(id)
+);
+
+CREATE TABLE История_Перемещений_Оборудования (
+    id INT PRIMARY KEY IDENTITY,
+    id_Склада INT,
+    id_Объекта INT,
+    id_Оборудования INT,
+	Дата_Перемещения_На_Объект DATETIME DEFAULT GETDATE(),
+	Дата_Перемещения_С_Объекта_На_Склад DATETIME DEFAULT GETDATE(),
+    Описание NVARCHAR(MAX),
+    FOREIGN KEY (id_Склада) REFERENCES Склады(id),
+    FOREIGN KEY (id_Объекта) REFERENCES Строительные_Объекты(id),
+    FOREIGN KEY (id_Оборудования) REFERENCES Оборудование(id)
 );

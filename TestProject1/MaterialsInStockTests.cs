@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MezhTransStroy;
+using MezhTransStroy.Database;
+
 namespace TestProject1
 {
     public class MaterialsInStockTests

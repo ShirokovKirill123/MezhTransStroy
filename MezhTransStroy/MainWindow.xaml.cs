@@ -16,7 +16,6 @@ using System.Windows.Shapes;
 using System.IO;
 using MezhTransStroy.Roles;
 
-
 namespace MezhTransStroy
 {
     /// <summary>
@@ -51,9 +50,9 @@ namespace MezhTransStroy
             else
             {
 
-                Authorization authpage = new Authorization();
+                AuthorizationPage authpage = new AuthorizationPage();
                 this.Content = authpage;
             }
-        }      
+        }
     }
 }
