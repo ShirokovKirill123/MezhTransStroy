@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace TestProject1
 {
+    // Создание мок-объекта для использования в unit-тестах
     public static class DbSetMock
     {
         public static DbSet<T> Create<T>(IQueryable<T> data) where T : class

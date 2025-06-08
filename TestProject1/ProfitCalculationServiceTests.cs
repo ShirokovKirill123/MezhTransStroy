@@ -10,12 +10,12 @@ using Moq;
 
 namespace TestProject1
 {
+    // Проверка, что сервис расчёта прибыли возвращает корректное значение
     public class ProfitCalculationServiceTests
     {
         [Fact]
         public void CalculateProfit_Should_Return_Correct_Profit()
         {
-            // Arrange
             var mockContext = new Mock<СтроительствоEntities>();
 
             var строительныеОбъекты = new List<Строительные_Объекты>
@@ -52,7 +52,6 @@ namespace TestProject1
             var service = new ProfitCalculationService(mockContext.Object);
             var profit = service.CalculateProfit(1);
             Assert.Equal(25000, profit);
-        }
-        
+        }        
     }
 }

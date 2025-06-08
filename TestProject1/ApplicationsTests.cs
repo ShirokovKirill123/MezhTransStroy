@@ -10,6 +10,7 @@ namespace TestProject1
 {
     public class ApplicationsTests
     {
+        // Проверка, что свойства объекта Заявки устанавливаются корректно
         [Fact]
         public void Applications_Should_Set_Properties_Correctly()
         {

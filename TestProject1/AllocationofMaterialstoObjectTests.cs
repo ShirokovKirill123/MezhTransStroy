@@ -10,6 +10,7 @@ namespace TestProject1
 {
     public class AllocationofMaterialstoObjectTests
     {
+        // Проверка, что свойства объекта Распределение_Материалов_На_Объект устанавливаются корректно
         [Fact]
         public void AllocationofMaterialstoObject_Should_Set_Properties_Correctly()
         {

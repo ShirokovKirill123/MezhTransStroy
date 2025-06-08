@@ -1,2 +1,210 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MezhTransStroy.Application_Materials_At_ObjectPage" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAACAAEAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Applications\Application_Materials_At_ObjectPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MezhTransStroy.ApplicationsFromAConstructionSitePage" Collapsed="true">
+    <Position X="2.25" Y="2.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAIAAAAAA=</HashCode>
+      <FileName>Applications\ApplicationsFromAConstructionSitePage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MezhTransStroy.CreateApplicationWindow" Collapsed="true">
+    <Position X="7" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QBAGAAAAAAAAAEAAAAAAAAAAAAAAAAIAAAAAgAFAAAA=</HashCode>
+      <FileName>Applications\CreateApplicationWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MezhTransStroy.DataGridLoader" Collapsed="true">
+    <Position X="7.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEEAAAAAQAACAAAAAAgAAgAgBAAAAEAAAIBAAAAAAE=</HashCode>
+      <FileName>Classes\DataGridLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MezhTransStroy.HistoryService" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\HistoryService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MezhTransStroy.Manager" Collapsed="true">
+    <Position X="7.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\Manager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MezhTransStroy.MaterialManager" Collapsed="true">
+    <Position X="7.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAQAAAAAEAAAAABAAAAAAA=</HashCode>
+      <FileName>Classes\MaterialManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MezhTransStroy.NotificationManager" Collapsed="true">
+    <Position X="7.25" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAgAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\NotificationManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MezhTransStroy.NotificationService" Collapsed="true">
+    <Position X="7.25" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAQABAAAIABAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Classes\NotificationService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MezhTransStroy.Memento.Caretaker" Collapsed="true">
+    <Position X="9" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Memento\Caretaker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MezhTransStroy.Memento.Memento" Collapsed="true">
+    <Position X="9" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEQAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Memento\Memento.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MezhTransStroy.Memento.Ordinator" Collapsed="true">
+    <Position X="9" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEQAAAQAACAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Memento\Ordinator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MezhTransStroy.ForwardedMaterialsAtObject" Collapsed="true">
+    <Position X="10.75" Y="0.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAASAAAAAAAAAAAAAAAAAAAEIAAAAAA=</HashCode>
+      <FileName>Notifications\ForwardedMaterialsAtObject.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MezhTransStroy.NotificationPage" Collapsed="true">
+    <Position X="10.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAABAAAAAAAAAAAIYAAAAAA=</HashCode>
+      <FileName>Notifications\NotificationPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MezhTransStroy.RedirectQuantityWindow" Collapsed="true">
+    <Position X="10.75" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ABACAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAgAAAAAA=</HashCode>
+      <FileName>Notifications\RedirectQuantityWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MezhTransStroy.SelectObjectWindow" Collapsed="true">
+    <Position X="10.75" Y="2.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAQAAAAAAAAAAAAAIAAAAAAABAAQA=</HashCode>
+      <FileName>Redirections\SelectObjectWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MezhTransStroy.Roles.AccountingPage" Collapsed="true">
+    <Position X="5.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQhABACEDEAAEACQAAAAAAIQIIAAACBAACACQEAQAA=</HashCode>
+      <FileName>Roles\AccountingPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MezhTransStroy.Roles.AdminPage" Collapsed="true">
+    <Position X="5.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQSxBBASEDUAAEASQACBQAAIQIoAQACBAACACREAQlI=</HashCode>
+      <FileName>Roles\AdminPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MezhTransStroy.Roles.BuildingPage" Collapsed="true">
+    <Position X="5.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQhABACEDAAAEACQACAQAAIQIIAQAABAACACREAAgA=</HashCode>
+      <FileName>Roles\BuildingPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MezhTransStroy.Roles.PlanningPage" Collapsed="true">
+    <Position X="5.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQxBBASEDQAAEASQACAQAAIQIIAAACBAAAACREAQlI=</HashCode>
+      <FileName>Roles\PlanningPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MezhTransStroy.Roles.WarehousePage" Collapsed="true">
+    <Position X="5.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQxABACEDQAAEASQAABAAAIQIoAAACBAAAACQEAAgI=</HashCode>
+      <FileName>Roles\WarehousePage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MezhTransStroy.CostsPage" Collapsed="true">
+    <Position X="9.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAIgAMAAAAAAAAAAgAEACBAABAAQAAAAAAA=</HashCode>
+      <FileName>Сosts\CostsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MezhTransStroy.ObjectInfoPage" Collapsed="true">
+    <Position X="9.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAEAAAIAAAAIAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Сosts\ObjectInfoPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MezhTransStroy.Сosts.ProfitCalculationService" Collapsed="true">
+    <Position X="11" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Сosts\ProfitCalculationService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MezhTransStroy.AuthorizationPage" Collapsed="true">
+    <Position X="7.25" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAACAAAAAACA=</HashCode>
+      <FileName>AuthorizationPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MezhTransStroy.MaterialMovementsPage" Collapsed="true">
+    <Position X="3.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>MaterialMovementsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MezhTransStroy.ReportsPage" Collapsed="true">
+    <Position X="3.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEQkAOAQAAAAAAEAkAkgCAQAgAAAEBAAAAA=</HashCode>
+      <FileName>ReportsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

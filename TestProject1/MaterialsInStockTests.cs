@@ -10,8 +10,9 @@ namespace TestProject1
 {
     public class MaterialsInStockTests
     {
+        // Проверка, что свойства объекта Материалы_На_Складах устанавливаются корректно
         [Fact]
-        public void МатериалыНаСкладах_Should_Set_Properties_Correctly()
+        public void MaterialsInStock_Should_Set_Properties_Correctly()
         {
             var запись = new Материалы_На_Складах
             {

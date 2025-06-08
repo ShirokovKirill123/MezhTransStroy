@@ -68,7 +68,7 @@
             <Border BorderThickness="1"
           BorderBrush="#FF000000"
           x:Name="SideMenu">
-                <StackPanel Width="220" Orientation="Vertical" HorizontalAlignment="Center" Height="326"  Background="Gray">
+                <StackPanel Width="220" Orientation="Vertical" HorizontalAlignment="Center" Height="327"  Background="Gray">
                     <Button Content="Отделы" Height="30" Margin="3" Click="Button_Sections_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
                     <Button Content="Сотрудники" Height="30" Margin="3" Click="Button_Employees_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>
                     <Button Content="Строительные объекты" Height="30" Margin="3" Click="Button_Construction_Objects_Click" FontSize="10" FontFamily="Yu Gothic UI Semibold"  Background="SandyBrown"/>

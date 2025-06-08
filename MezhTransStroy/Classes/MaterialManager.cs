@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace MezhTransStroy
 {
-    static class MaterialManager
+    public static class MaterialManager
     {
         private static readonly string filePath = "excludedMaterials.json";
 

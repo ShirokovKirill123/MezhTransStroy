@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MezhTransStroy.Memento
 {
     // Управление состоянием авторизации
-    class Ordinator
+    public class Ordinator
     {
         public string Username { get; set; }
         public string Role { get; set; }
