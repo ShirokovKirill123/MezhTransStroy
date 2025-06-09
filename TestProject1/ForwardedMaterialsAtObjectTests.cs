@@ -10,18 +10,19 @@ namespace TestProject1
 {
     public class ForwardedMaterialsAtObjectTests
     {
-        // проверка добавления выбранной записи в список исключённых
+        // Проверка, что добавление записи в excludedMaterialsList работает
         [Fact]
         public void ClearSelectedNotification_ShouldAddSelectedRecordToExcludedList()
         {
-            var forwardedMaterials = new ForwardedMaterialsAtObject();
-            var testRecord = "Материал A отправлен со склада";
             MaterialManager.excludedMaterialsList.Clear();
+
+            var testRecord = "Материал A отправлен со склада";
             MaterialManager.excludedMaterialsList.Add(testRecord);
+
             Assert.Contains(testRecord, MaterialManager.excludedMaterialsList);
         }
 
-        // проверка, что при очистке все записи попадают в список исключённых
+        // Проверка, что при очистке добавляются все записи в excludedMaterialsList 
         [Fact]
         public void ClearAllForwardedMaterials_ShouldAddAllRecordsToExcludedList()
         {
@@ -33,11 +34,13 @@ namespace TestProject1
 
             MaterialManager.excludedMaterialsList.Clear();
             MaterialManager.excludedMaterialsList.AddRange(testRecords);
-            Assert.Equal(2, MaterialManager.excludedMaterialsList.Count);
+
+            Assert.Equal(testRecords.Count, MaterialManager.excludedMaterialsList.Count);
             Assert.Contains("Материал A отправлен со склада", MaterialManager.excludedMaterialsList);
+            Assert.Contains("Материал B отправлен со склада", MaterialManager.excludedMaterialsList);
         }
 
-        // проверяка, фильтрации исключённых записей при формировании отображаемого списка 
+        // Проверка фильтрации исключённых материалов из общего списка
         [Fact]
         public void ExcludedMaterials_ShouldNotContainDeletedItems()
         {
@@ -50,8 +53,9 @@ namespace TestProject1
 
             MaterialManager.excludedMaterialsList.Clear();
             MaterialManager.excludedMaterialsList.Add("Материал B отправлен со склада");
-            var displayList = allRecords
-                .FindAll(item => !MaterialManager.excludedMaterialsList.Contains(item));
+
+            var displayList = allRecords.FindAll(item => !MaterialManager.excludedMaterialsList.Contains(item));
+
             Assert.DoesNotContain("Материал B отправлен со склада", displayList);
             Assert.Equal(2, displayList.Count);
         }
