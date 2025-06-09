@@ -33,7 +33,6 @@ namespace MezhTransStroy
         {
             _dataGrid = dataGrid;
         }
-
         public void LoadSections()
         {
             using (var context = new СтроительствоEntities())
@@ -42,7 +41,6 @@ namespace MezhTransStroy
 
                 _dataGrid.ItemsSource = list;
                 _dataGrid.Columns.Clear();
-
                 _dataGrid.Columns.Add(new DataGridTextColumn
                 {
                     Header = "ID",

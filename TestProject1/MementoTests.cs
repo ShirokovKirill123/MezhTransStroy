@@ -19,7 +19,6 @@ namespace TestProject1
             Assert.Equal("админ", memento.Role);
             Assert.Equal(18, memento.Employee);
         }
-
         // Проверка, что Ordinator корректно создаёт снимок текущего состояния
         [Fact]
         public void Ordinator_ShouldCreateMementoWithCurrentState()
@@ -31,12 +30,10 @@ namespace TestProject1
                 Employee = 1
             };
             var memento = ordinator.CreateMemento();
-
             Assert.Equal("план1", memento.Username);
             Assert.Equal("планирование", memento.Role);
             Assert.Equal(1, memento.Employee);
         }
-
         // Проверка, что Ordinator корректно восстанавливает данные из Memento
         [Fact]
         public void Ordinator_ShouldRestoreStateFromMemento()
