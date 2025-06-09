@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject1", "TestProject
 		{1D6F31B5-4940-47B7-B358-6EB766818DD4} = {1D6F31B5-4940-47B7-B358-6EB766818DD4}
 	EndProjectSection
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "Setup1\Setup1.vdproj", "{0523E13D-C222-4E62-A22D-D85A0BE92997}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "OOOMezhTransStroy_Setup", "OOOMezhTransStroy_Setup\OOOMezhTransStroy_Setup.vdproj", "{86AD7131-8793-41B0-8977-2ED7028E1020}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,9 +31,9 @@ Global
 		{30A8607E-813D-42D0-9139-EB98BA024975}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30A8607E-813D-42D0-9139-EB98BA024975}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30A8607E-813D-42D0-9139-EB98BA024975}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0523E13D-C222-4E62-A22D-D85A0BE92997}.All|Any CPU.ActiveCfg = Debug
-		{0523E13D-C222-4E62-A22D-D85A0BE92997}.Debug|Any CPU.ActiveCfg = Debug
-		{0523E13D-C222-4E62-A22D-D85A0BE92997}.Release|Any CPU.ActiveCfg = Release
+		{86AD7131-8793-41B0-8977-2ED7028E1020}.All|Any CPU.ActiveCfg = Debug
+		{86AD7131-8793-41B0-8977-2ED7028E1020}.Debug|Any CPU.ActiveCfg = Debug
+		{86AD7131-8793-41B0-8977-2ED7028E1020}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
