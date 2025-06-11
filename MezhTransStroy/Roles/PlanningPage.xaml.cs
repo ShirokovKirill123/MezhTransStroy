@@ -675,6 +675,7 @@ namespace MezhTransStroy.Roles
                 if (измененияБыли)
                 {
                     context.SaveChanges();
+                    TableNameTextBlock.Text = "Материалы на складах";
                     Button_Materials_In_Stock_Click(null, null);
 
                     MessageBox.Show("Обработанные заявки добавлены в материалы на складах и уведомления сохранены в базу",

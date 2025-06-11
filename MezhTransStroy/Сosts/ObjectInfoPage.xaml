@@ -65,7 +65,7 @@
             </Grid.ColumnDefinitions>
 
             <Border Background="White" CornerRadius="15" BorderBrush="#4CAF50" BorderThickness="1" Padding="20"
-        HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="0" Margin="53,0,0,68" Width="370" Height="182">
+        HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" Margin="-180,0,0,0" Width="370" Height="182">
                 <Grid>
                     <Image Source="/Images/кнопка1.png" HorizontalAlignment="Right" VerticalAlignment="Top" Height="68" Width="134" Margin="0,-42,-75,0"/>
 
