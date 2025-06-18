@@ -482,7 +482,6 @@ namespace MezhTransStroy.Roles
                 {
                     Header = "Израсходовано",
                     Binding = new Binding("Израсходовано"),
-                    IsReadOnly = true,
                     ElementStyle = new Style(typeof(TextBlock))
                     {
                         Setters = { new Setter(TextBlock.TextAlignmentProperty, TextAlignment.Center) }

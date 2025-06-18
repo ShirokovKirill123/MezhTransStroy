@@ -22,8 +22,8 @@ namespace MezhTransStroy.Database
         public Nullable<System.DateTime> Дата_Перемещения_С_Объекта_На_Склад { get; set; }
         public string Описание { get; set; }
     
-        public virtual Оборудование Оборудование { get; set; }
         public virtual Строительные_Объекты Строительные_Объекты { get; set; }
+        public virtual Оборудование Оборудование { get; set; }
         public virtual Склады Склады { get; set; }
     }
 }

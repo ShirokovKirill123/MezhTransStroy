@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3cd9019b61a34bb69baa5d4c9c48a652" Name="Diagram1">
+      <Diagram DiagramId="3283b077d3134f028bed30e1df490db5" Name="Diagram1">
         <EntityTypeShape EntityType="СтроительствоModel.Заработная_Плата_Сотрудников" Width="1.5" PointX="3" PointY="27.875" IsExpanded="true" />
         <EntityTypeShape EntityType="СтроительствоModel.Затраты_На_Оборудование" Width="1.5" PointX="3" PointY="13.25" IsExpanded="true" />
         <EntityTypeShape EntityType="СтроительствоModel.Заявки" Width="1.5" PointX="6" PointY="12.375" IsExpanded="true" />
@@ -24,37 +24,37 @@
         <EntityTypeShape EntityType="СтроительствоModel.Сотрудники" Width="1.5" PointX="0.75" PointY="17.875" IsExpanded="true" />
         <EntityTypeShape EntityType="СтроительствоModel.Строительные_Объекты" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="СтроительствоModel.Уведомления" Width="1.5" PointX="8.25" PointY="21.875" IsExpanded="true" />
-        <AssociationConnector Association="СтроительствоModel.FK__Заработна__id_Со__6C190EBB" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Затраты_Н__id_Об__68487DD7" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Затраты_Н__id_Об__693CA210" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Заявки__id_Матер__5AEE82B9" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Заявки__id_Объек__5812160E" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Заявки__id_Поста__59FA5E80" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Заявки__id_Склад__59063A47" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__История_П__id_За__797309D9" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_За__5EBF139D" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Уведомлен__id_За__72C60C4A" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__История_П__id_Ма__787EE5A0" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__История_П__id_Об__778AC167" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__История_П__id_Ск__76969D2E" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__История_П__id_Об__00200768" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__История_П__id_Об__7F2BE32F" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__История_П__id_Ск__7E37BEF6" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Материалы__id_Ма__47DBAE45" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_Ма__619B8048" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Материалы__id_По__48CFD27E" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Материалы__id_Ск__46E78A0C" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Оборудова__id_Об__4D94879B" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_Об__534D60F1" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Оборудова__id_Ск__4CA06362" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Сотрудник__id_От__398D8EEE" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Пользоват__id_Со__6EF57B66" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Работа_На__id_Об__656C112C" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Работа_На__id_Со__6477ECF3" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_Об__5FB337D6" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_Ск__60A75C0F" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_Об__52593CB8" ManuallyRouted="false" />
-        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_Ск__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Заработна__id_Со__7E37BEF6" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Затраты_Н__id_Об__7A672E12" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Затраты_Н__id_Об__7B5B524B" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Заявки__id_Матер__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Заявки__id_Объек__6A30C649" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Заявки__id_Поста__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Заявки__id_Склад__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__История_П__id_За__0B91BA14" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_За__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Уведомлен__id_За__04E4BC85" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__История_П__id_Ма__0A9D95DB" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__История_П__id_Об__09A971A2" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__История_П__id_Ск__08B54D69" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__История_П__id_Об__114A936A" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__История_П__id_Об__123EB7A3" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__История_П__id_Ск__10566F31" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Материалы__id_Ма__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_Ма__73BA3083" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Материалы__id_По__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Материалы__id_Ск__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Оборудова__id_Об__5FB337D6" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_Об__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Оборудова__id_Ск__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Сотрудник__id_От__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Пользоват__id_Со__01142BA1" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Работа_На__id_Об__778AC167" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Работа_На__id_Со__76969D2E" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_Об__71D1E811" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_Ск__72C60C4A" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_Об__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="СтроительствоModel.FK__Распредел__id_Ск__6383C8BA" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
